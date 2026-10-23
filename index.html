@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Melissa Moller · Portfólio UGC Creator</title>
-<meta name="description" content="Portfólio de Melissa Moller, UGC Creator: vídeos, fotos e unboxings que fazem marcas parecerem gente e venderem mais.">
+<title>Melissa Möller · Portfólio UGC Creator</title>
+<meta name="description" content="Portfólio de Melissa Möller, UGC Creator: vídeos, fotos e unboxings que fazem marcas parecerem gente e venderem mais.">
 <meta name="theme-color" content="#111111">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,7 +18,7 @@
   --tinta:#2a201b;
   --cinza:#5e5048;
   --vermelho:#804a32; /* marrom: textos, botões e faixa de números */
-  --terracota:#c1724f; /* terracota da referência: detalhes grandes */
+  --terracota:#804a32; /* mesmo marrom dos botões, usado nos detalhes grandes */
   --branco:#ffffff;
   --serif:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
   --sans:'Poppins', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -104,7 +104,7 @@ p{margin:0 0 1em}
 .capa-nome .vermelho{color:var(--terracota)}
 .capa-grade{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);align-items:start}
 .capa-frase{font-family:var(--serif);font-size:clamp(1.35rem,2.6vw,2rem);line-height:1.2;font-weight:500;font-style:italic;max-width:24ch;margin-bottom:28px}
-.capa-botoes{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:26px}
+.capa-botoes{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px}
 .capa-numeros{display:grid;grid-template-columns:repeat(3,1fr);border-top:3px solid var(--tinta);border-bottom:1px solid var(--tinta);margin:0}
 .capa-numeros div{padding:14px 12px 12px 0}
 .capa-numeros div+div{border-left:1px solid var(--tinta);padding-left:14px}
@@ -116,17 +116,11 @@ p{margin:0 0 1em}
 /* selo de agenda aberta na linha do topo da capa */
 .agenda{display:inline-flex;align-items:center;gap:7px;margin-left:10px;padding:3px 10px;border:1px solid var(--vermelho);border-radius:999px;color:var(--vermelho);font-weight:600;letter-spacing:.16em}
 .agenda::before{content:"";width:7px;height:7px;border-radius:50%;background:#2f8f4e}
-/* logos redondas das marcas na primeira dobra */
-.capa-marcas{margin:0 0 26px}
-.capa-marcas p{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;margin:0 0 10px;color:var(--cinza)}
-.capa-marcas ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
-.capa-marcas li{width:56px;height:56px;border-radius:50%;overflow:hidden;background:var(--branco);border:1px solid var(--papel-2);display:grid;place-items:center;box-shadow:0 2px 8px rgba(42,32,27,.08)}
-.capa-marcas img{width:100%;height:100%;object-fit:contain;padding:6px}
-/* faixa fina com marcas */
-.faixa-marcas{margin-top:clamp(40px,6vw,64px);background:var(--tinta);color:var(--branco);overflow:hidden;white-space:nowrap;padding:12px 0;border-top:3px solid var(--terracota)}
-.faixa-trilho{display:inline-flex;animation:rolar 40s linear infinite}
-.faixa-trilho span{font-family:var(--serif);font-weight:700;font-style:italic;font-size:1.05rem;padding:0 22px}
-.faixa-trilho span::after{content:"●";font-style:normal;color:var(--terracota);font-size:.5rem;vertical-align:middle;margin-left:44px}
+/* faixa em movimento com as logos das marcas (fundo branco para as logos aparecerem no formato original) */
+.faixa-marcas{margin-top:clamp(40px,6vw,64px);background:var(--branco);overflow:hidden;white-space:nowrap;padding:14px 0;border-top:3px solid var(--terracota);border-bottom:1px solid var(--papel-2)}
+.faixa-trilho{display:inline-flex;align-items:center;animation:rolar 40s linear infinite}
+.faixa-trilho span{display:inline-flex;align-items:center;padding:0 clamp(22px,3vw,40px)}
+.faixa-trilho img{height:44px;width:auto;max-width:none}
 @keyframes rolar{to{transform:translateX(-50%)}}
 @media (max-width:860px){
   .capa-grade{grid-template-columns:1.2fr .8fr;gap:20px}
@@ -138,7 +132,7 @@ p{margin:0 0 1em}
   .capa-texto{display:contents}
   .capa-nome{order:1;font-size:clamp(2.9rem,16vw,5.2rem)}
   .capa-foto{order:2;width:100%;margin:0 0 24px}
-  .capa-frase{order:3}.capa-botoes{order:4}.capa-marcas{order:5}.capa-numeros{order:6}
+  .capa-frase{order:3}.capa-botoes{order:4}.capa-numeros{order:5}
   .agenda{margin:6px 0 0}
   .capa-nome span{display:block}
   .capa-numeros dt{font-size:.62rem;letter-spacing:.08em}
@@ -306,7 +300,7 @@ p{margin:0 0 1em}
   </div>
   <nav class="menu" aria-label="Menu principal">
     <div class="recipiente">
-      <a class="logo" href="#inicio">Melissa <em>Moller</em></a>
+      <a class="logo" href="#inicio">Melissa <em>Möller</em></a>
       <button class="hamburguer" type="button" aria-expanded="false" aria-controls="menu-links" aria-label="Abrir menu"><span></span></button>
       <ul id="menu-links">
         <li><a href="#sobre">Sobre</a></li>
@@ -329,16 +323,11 @@ p{margin:0 0 1em}
 
     <div class="capa-grade">
       <div class="capa-texto">
-        <h1 class="capa-nome" id="titulo-capa"><span class="l1">Melissa</span> <span class="vermelho">Moller</span></h1>
+        <h1 class="capa-nome" id="titulo-capa"><span class="l1">Melissa</span> <span class="vermelho">Möller</span></h1>
         <p class="capa-frase">Crio vídeos que soam como conversa de amiga e vendem como anúncio para a sua marca.</p>
         <div class="capa-botoes">
           <a class="btn btn-vermelho" href="#contato">Falar comigo</a>
           <a class="btn btn-contorno" href="#trabalhos">Ver os trabalhos</a>
-        </div>
-        <!-- Logos redondas das marcas: vêm do array LOGOS no script. Enquanto ele estiver vazio, este bloco não aparece. -->
-        <div class="capa-marcas" id="capa-marcas" hidden>
-          <p>Marcas com quem já criei</p>
-          <ul id="capa-logos"></ul>
         </div>
         <!-- Os três números da capa são preenchidos pelo array NUMEROS_CAPA no script -->
         <dl class="capa-numeros" id="capa-numeros"></dl>
@@ -347,12 +336,12 @@ p{margin:0 0 1em}
       <figure class="capa-foto">
         <!-- FOTO DA CAPA: para trocar, substitua o arquivo fotos/capa.jpg (de preferência vertical).
              object-position escolhe qual parte da foto aparece no recorte 4:5 (0% = topo, 100% = base). -->
-        <div class="provisorio g1"><img src="fotos/capa.jpg" alt="Melissa Moller sorrindo, de blusa branca de renda, ao ar livre" width="900" height="1599" fetchpriority="high" style="object-position:50% 30%"></div>
+        <div class="provisorio g1"><img src="fotos/capa.jpg" alt="Melissa Möller sorrindo, de blusa branca de renda, ao ar livre" width="900" height="1599" fetchpriority="high" style="object-position:50% 30%"></div>
       </figure>
     </div>
   </div>
 
-  <!-- faixa fina com os nomes das marcas (array MARCAS no script) -->
+  <!-- faixa em movimento com as logos das marcas (array LOGOS no script) -->
   <div class="faixa-marcas" aria-label="Marcas atendidas">
     <div class="faixa-trilho" id="faixa-trilho"></div>
   </div>
@@ -365,19 +354,20 @@ p{margin:0 0 1em}
   <div class="recipiente sobre-grade">
     <figure class="sobre-foto revelar">
       <!-- FOTO DO SOBRE: para trocar, substitua o arquivo fotos/sobre.jpg (de preferência vertical). -->
-      <div class="provisorio g2"><img src="fotos/sobre.jpg" alt="Melissa Moller sentada à beira da piscina ao pôr do sol, com a cidade ao fundo" width="900" height="1599" loading="lazy" style="object-position:50% 55%"></div>
+      <div class="provisorio g2"><img src="fotos/sobre.jpg" alt="Melissa Möller sentada à beira da piscina ao pôr do sol, com a cidade ao fundo" width="900" height="1599" loading="lazy" style="object-position:50% 55%"></div>
     </figure>
     <div class="sobre-texto revelar">
       <p class="cartola">Nº 02 · Sobre mim</p>
       <h2 class="titulo-secao" id="titulo-sobre">Prazer, eu sou a <em>Mel</em></h2>
-      <p class="capitular">Oi! Eu crio conteúdo para marcas que querem falar como gente. Meus vídeos fazem a pessoa parar de rolar o feed porque soam como a recomendação de uma amiga, e não como propaganda.</p>
-      <p>Antes de ligar a câmera, eu estudo o seu produto, o seu público e o que já funcionou com vocês. Depois disso, pode deixar comigo: roteiro, gravação, edição e entrega organizada, tudo do jeito que a sua marca precisa.</p>
+      <p class="capitular">Sou gaúcha de Porto Alegre, 40+, e crio o tipo de vídeo que faz a pessoa parar o dedo no feed e pensar: “eu quero isso”.</p>
+      <p>Falo do seu produto como quem usa de verdade, com a segurança de quem não precisa fingir nada. É essa naturalidade que transforma uma visualização em confiança, e confiança em venda.</p>
+      <p>Comigo, a sua marca não recebe só um vídeo: recebe roteiro pensado para o seu público, gravação caprichada, edição pronta para orgânico e anúncio e uma parceira que cumpre o combinado. Me conta qual é o produto que eu te mostro como ele pode brilhar.</p>
       <ul class="promessas">
         <li><b>01</b><span>Roteiro aprovado por você antes de gravar.</span></li>
         <li><b>02</b><span>Uma rodada de ajuste inclusa em cada entrega.</span></li>
         <li><b>03</b><span>Entrega em até 72 horas úteis.</span></li>
       </ul>
-      <p class="assinatura">Melissa Moller<small>UGC Creator · @melsmoller</small></p>
+      <p class="assinatura">Melissa Möller<small>UGC Creator · @melsmoller</small></p>
     </div>
   </div>
 </section>
@@ -485,14 +475,14 @@ p{margin:0 0 1em}
 <footer class="rodape">
   <div class="recipiente">
     <div class="rodape-topo">
-      <p class="nome">Melissa Moller</p>
+      <p class="nome">Melissa Möller</p>
       <ul>
         <li><a href="https://www.instagram.com/melsmoller/" target="_blank" rel="noopener">Instagram @melsmoller</a></li>
         <li><a href="https://wa.me/5551993231469" target="_blank" rel="noopener">WhatsApp</a></li>
         <li><a href="mailto:melissasmoller@gmail.com">melissasmoller@gmail.com</a></li>
       </ul>
     </div>
-    <small>© <span id="ano"></span> Melissa Moller · UGC Creator · Porto Alegre</small>
+    <small>© <span id="ano"></span> Melissa Möller · UGC Creator · Porto Alegre</small>
   </div>
 </footer>
 
@@ -531,24 +521,17 @@ const NUMEROS_CAPA = [
   { valor: '0M',  rotulo: 'views somadas' }
 ];
 
-// Marcas da faixa fina da capa. Troque pelos nomes reais.
-const MARCAS = ['Marca 01','Marca 02','Marca 03','Marca 04','Marca 05','Marca 06',
-                'Marca 07','Marca 08','Marca 09','Marca 10','Marca 11','Marca 12'];
-
-// Logos redondas das marcas na primeira dobra.
-//  logo: caminho da imagem na pasta "logos". fundo: cor do círculo atrás da logo.
-//  margem: espaço entre a logo e a borda do círculo (logos compridas precisam de mais).
-//  cobrir: true faz a logo preencher o círculo inteiro (bom para logos que já são redondas ou quadradas).
-//  Enquanto a lista estiver vazia, o bloco de logos não aparece no site.
+// Logos das marcas na faixa em movimento da capa, no formato original de cada uma.
+//  logo: caminho da imagem na pasta "logos". Para adicionar uma marca, coloque a imagem nessa pasta e copie uma linha.
 const LOGOS = [
-  { nome: 'La Roche-Posay',          logo: 'logos/la-roche-posay.png', fundo: '#ffffff', margem: '8px' },
-  { nome: 'Nivea',                   logo: 'logos/nivea.png',          fundo: '#ffffff', cobrir: true },
-  { nome: 'Wella',                   logo: 'logos/wella.png',          fundo: '#ffffff', margem: '10px' },
-  { nome: 'Natura',                  logo: 'logos/natura.png',         fundo: '#f7f7f8', margem: '10px' },
-  { nome: 'Sebastian Professional',  logo: 'logos/sebastian.png',      fundo: '#262627', margem: '7px' },
-  { nome: 'Cif',                     logo: 'logos/cif.png',            fundo: '#ffffff', margem: '6px' },
-  { nome: 'Omo',                     logo: 'logos/omo.png',            fundo: '#ffffff', margem: '8px' },
-  { nome: 'JBL',                     logo: 'logos/jbl.png',            fundo: '#ffffff', cobrir: true }
+  { nome: 'La Roche-Posay',         logo: 'logos/la-roche-posay.png' },
+  { nome: 'Nivea',                  logo: 'logos/nivea.png' },
+  { nome: 'Wella',                  logo: 'logos/wella.png' },
+  { nome: 'Natura',                 logo: 'logos/natura.png' },
+  { nome: 'Sebastian Professional', logo: 'logos/sebastian.png' },
+  { nome: 'Cif',                    logo: 'logos/cif.png' },
+  { nome: 'Omo',                    logo: 'logos/omo.png' },
+  { nome: 'JBL',                    logo: 'logos/jbl.png' }
 ];
 
 // Três conteúdos de destaque.
@@ -627,17 +610,13 @@ const cores = ['g1','g2','g3','g4','g5','g6'];
 // Capa: números e faixa de marcas
 $('#capa-numeros').innerHTML = NUMEROS_CAPA.map((n) =>
   `<div><dt>${esc(n.rotulo)}</dt><dd>${esc(n.valor)}</dd></div>`).join('');
-const marcasHTML = MARCAS.map((m) => `<span>${esc(m)}</span>`).join('');
-// a lista vai duas vezes para a faixa rolar sem emenda; a cópia fica escondida dos leitores de tela
-$('#faixa-trilho').innerHTML = `<div>${marcasHTML}</div><div aria-hidden="true">${marcasHTML}</div>`;
+// a faixa tem duas metades iguais para rolar sem emenda; cada metade traz a lista duas vezes para cobrir telas largas.
+// Só a primeira lista leva o nome das marcas para leitores de tela; as repetições ficam escondidas.
+const logosHTML = (comNome) => LOGOS.map((l) =>
+  `<span title="${esc(l.nome)}"${comNome ? '' : ' aria-hidden="true"'}><img src="${esc(l.logo)}" alt="${comNome ? esc(l.nome) : ''}" height="44"></span>`).join('');
+$('#faixa-trilho').innerHTML = `<div>${logosHTML(true)}${logosHTML(false)}</div>` +
+  `<div aria-hidden="true">${logosHTML(false)}${logosHTML(false)}</div>`;
 $('#faixa-trilho').querySelectorAll(':scope > div').forEach((d) => d.style.display = 'inline-flex');
-
-// Logos redondas das marcas (só aparece quando houver logos na lista)
-if (LOGOS.length) {
-  $('#capa-logos').innerHTML = LOGOS.map((l) =>
-    `<li title="${esc(l.nome)}" style="background:${esc(l.fundo || '#fff')}"><img src="${esc(l.logo)}" alt="${esc(l.nome)}" width="64" height="64" style="${l.cobrir ? 'object-fit:cover;padding:0' : 'padding:' + esc(l.margem || '8px')}"></li>`).join('');
-  $('#capa-marcas').hidden = false;
-}
 
 // Fundo do bloco de mídia: imagem real se houver, senão degradê com legenda
 function midia(capa, cor, legenda, descricao) {

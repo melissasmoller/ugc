@@ -175,7 +175,11 @@ p{margin:0 0 1em}
 .chip[aria-pressed="true"]{background:var(--vermelho);border-color:var(--vermelho);color:var(--branco)}
 .trabalhos-grade{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,2vw,24px)}
 .trabalho{margin:0;animation:aparecer .35s ease}
-.trabalho .provisorio{aspect-ratio:4/5;border:1px solid var(--tinta)}
+.trabalho .provisorio{aspect-ratio:9/16;border:1px solid var(--tinta)}
+.trabalho .provisorio img{position:absolute;inset:0;transition:transform .4s}
+.trabalho a:hover img{transform:scale(1.04)}
+.trabalho .play{position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:50%;background:var(--vermelho);display:grid;place-items:center;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.trabalho .play::before{content:"";margin-left:4px;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent}
 .trabalho .etiqueta{position:absolute;top:10px;left:10px;background:var(--branco);color:var(--tinta);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:4px 8px;border:1px solid var(--tinta)}
 .trabalho h3{font-size:1.15rem;margin-top:12px}
 .trabalho p{font-size:.88rem;color:var(--cinza);margin:4px 0 0}
@@ -183,7 +187,7 @@ p{margin:0 0 1em}
 @keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (max-width:1000px){.trabalhos-grade{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:700px){.trabalhos-grade{grid-template-columns:repeat(2,1fr)}}
-@media (max-width:400px){.trabalhos-grade{grid-template-columns:1fr}}
+@media (max-width:400px){.trabalho h3{font-size:1rem}.trabalho .play{width:44px;height:44px}}
 
 /* ================= 5. SERVIÇOS ================= */
 .servicos-grade{display:grid;grid-template-columns:repeat(3,1fr);border-top:3px solid var(--tinta)}
@@ -541,21 +545,19 @@ const DESTAQUES = [
   { numero: '0,0%',  rotulo: 'de CTR no anúncio', titulo: 'Título do vídeo 03', contexto: 'Marca 03 · objetivo e formato do conteúdo', link: '#', capa: '', cor: 'g3' }
 ];
 
-// Galeria de trabalhos. Os botões de filtro são criados a partir do campo "nicho".
-//  capa: caminho de uma imagem 4:5 (vazio mostra o degradê). link: endereço do trabalho.
+// Galeria de trabalhos. Os botões de filtro são criados a partir do campo "nicho", na ordem em que aparecem.
+//  link: endereço do vídeo. Se for do YouTube, a capa é puxada sozinha do próprio vídeo.
+//  capa: caminho de uma imagem própria, se quiser trocar a capa do YouTube (vazio usa a do YouTube).
+//  Para adicionar um vídeo, copie uma linha, troque o título e o link e mantenha a vírgula no fim.
 const TRABALHOS = [
-  { nicho: 'Beleza',      titulo: 'Rotina de skincare',      marca: 'Marca 01', formato: 'Reels 9:16',   capa: '', link: '#' },
-  { nicho: 'Beleza',      titulo: 'Maquiagem em 1 minuto',   marca: 'Marca 02', formato: 'TikTok 9:16',  capa: '', link: '#' },
-  { nicho: 'Moda',        titulo: 'Provador em casa',        marca: 'Marca 03', formato: 'Reels 9:16',   capa: '', link: '#' },
-  { nicho: 'Moda',        titulo: 'Três looks, uma peça',    marca: 'Marca 04', formato: 'Carrossel 4:5', capa: '', link: '#' },
-  { nicho: 'Alimentação', titulo: 'Receita rápida',          marca: 'Marca 05', formato: 'Reels 9:16',   capa: '', link: '#' },
-  { nicho: 'Alimentação', titulo: 'Teste de sabor',          marca: 'Marca 06', formato: 'Anúncio 9:16', capa: '', link: '#' },
-  { nicho: 'Casa',        titulo: 'Organização da cozinha',  marca: 'Marca 07', formato: 'Reels 9:16',   capa: '', link: '#' },
-  { nicho: 'Casa',        titulo: 'Antes e depois',          marca: 'Marca 08', formato: 'Fotos 4:5',    capa: '', link: '#' },
-  { nicho: 'Tecnologia',  titulo: 'Unboxing do gadget',      marca: 'Marca 09', formato: 'TikTok 9:16',  capa: '', link: '#' },
-  { nicho: 'Tecnologia',  titulo: 'Uso no dia a dia',        marca: 'Marca 10', formato: 'Anúncio 9:16', capa: '', link: '#' },
-  { nicho: 'Bem-estar',   titulo: 'Ritual da noite',         marca: 'Marca 11', formato: 'Reels 9:16',   capa: '', link: '#' },
-  { nicho: 'Bem-estar',   titulo: 'Treino em casa',          marca: 'Marca 12', formato: 'Stories 9:16', capa: '', link: '#' }
+  { nicho: 'Beleza',       titulo: 'Cicaplast',                    formato: 'YouTube Shorts', capa: '', link: 'https://youtube.com/shorts/Z9V8CuWF4AY' },
+  { nicho: 'Beleza',       titulo: 'Nivea Luminous',               formato: 'YouTube Shorts', capa: '', link: 'https://youtube.com/shorts/bd_HpAMYnR8' },
+  { nicho: 'Beleza',       titulo: 'Color Brilliance',             formato: 'YouTube Shorts', capa: '', link: 'https://youtube.com/shorts/DfqVKFOQsfA' },
+  { nicho: 'Beleza',       titulo: 'Óleo Seve Natura',             formato: 'YouTube Shorts', capa: '', link: 'https://youtube.com/shorts/7455cq1YNYs' },
+  { nicho: 'Beleza',       titulo: 'Sebastian Penetraitt',         formato: 'YouTube Shorts', capa: '', link: 'https://youtube.com/shorts/3IBu04R6HLQ' },
+  { nicho: 'Casa e Pets',  titulo: 'Cif Detergente e Concentrado', formato: 'YouTube Shorts', capa: '', link: 'https://youtube.com/shorts/Udt1wiDdbC0' },
+  { nicho: 'Casa e Pets',  titulo: 'Omo Ciclo Rápido',             formato: 'YouTube Shorts', capa: '', link: 'https://youtube.com/shorts/Jkq9UDnrVCY' },
+  { nicho: 'Tech',         titulo: 'JBL GO5',                      formato: 'YouTube',        capa: '', link: 'https://youtu.be/pcP8dojiVCM' }
 ];
 
 // Seis serviços (o número é gerado automaticamente pela ordem).
@@ -637,13 +639,21 @@ $('#destaques-grade').innerHTML = DESTAQUES.map((d, i) => {
 const nichos = ['Todos', ...new Set(TRABALHOS.map((t) => t.nicho))];
 $('#filtros').innerHTML = nichos.map((n, i) =>
   `<button class="chip" type="button" data-nicho="${esc(n)}" aria-pressed="${i === 0}">${esc(n)}</button>`).join('');
-$('#trabalhos-grade').innerHTML = TRABALHOS.map((t, i) =>
-  `<figure class="trabalho" data-nicho="${esc(t.nicho)}">
-    <a href="${esc(t.link || '#')}"${t.link && t.link !== '#' ? ' target="_blank" rel="noopener"' : ''} style="text-decoration:none;display:block">
-      ${midia(t.capa, cores[i % 6], t.formato, t.titulo + ' para ' + t.marca)}<span class="etiqueta">${esc(t.nicho)}</span></div>
-      <figcaption><h3>${esc(t.titulo)}</h3><p>${esc(t.marca)} · ${esc(t.formato)}</p></figcaption>
+// pega o código do vídeo em links do YouTube (shorts, youtu.be ou watch?v=)
+const idYouTube = (url) => (String(url).match(/(?:shorts\/|youtu\.be\/|[?&]v=)([\w-]{11})/) || [])[1];
+$('#trabalhos-grade').innerHTML = TRABALHOS.map((t, i) => {
+  const id = idYouTube(t.link);
+  // capa: imagem própria, ou a capa vertical do YouTube; se ela não carregar, fica o degradê com a legenda
+  const capa = t.capa || (id ? `https://i.ytimg.com/vi/${id}/oardefault.jpg` : '');
+  return `<figure class="trabalho" data-nicho="${esc(t.nicho)}">
+    <a href="${esc(t.link || '#')}"${t.link && t.link !== '#' ? ' target="_blank" rel="noopener"' : ''} aria-label="Assistir ao vídeo ${esc(t.titulo)} (abre em nova aba)" style="text-decoration:none;display:block">
+      <div class="provisorio ${cores[i % 6]}"><span class="legenda">${esc(t.formato)}</span>
+        ${capa ? `<img src="${esc(capa)}" alt="" loading="lazy" onerror="this.remove()" onload="if(this.naturalWidth<=120)this.remove()">` : ''}
+        <span class="etiqueta">${esc(t.nicho)}</span><span class="play" aria-hidden="true"></span></div>
+      <figcaption><h3>${esc(t.titulo)}</h3><p>${esc(t.formato)}</p></figcaption>
     </a>
-  </figure>`).join('');
+  </figure>`;
+}).join('');
 $('#filtros').addEventListener('click', (e) => {
   const botao = e.target.closest('.chip');
   if (!botao) return;

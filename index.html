@@ -12,12 +12,12 @@
 <style>
 /* ================= BASE ================= */
 :root{
-  --papel:#f4eae2;
-  --papel-2:#eadbcd;
+  --papel:#f4f1eb;
+  --papel-2:#ebe6dc;
   --creme:#fbf6f2;
   --tinta:#2a201b;
   --cinza:#5e5048;
-  --vermelho:#9c5135; /* terracota escuro: textos e botões (contraste bom) */
+  --vermelho:#804a32; /* marrom: textos, botões e faixa de números */
   --terracota:#c1724f; /* terracota da referência: detalhes grandes */
   --branco:#ffffff;
   --serif:'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
@@ -48,7 +48,7 @@ p{margin:0 0 1em}
 .codigo-barras{flex:none;width:96px;height:18px;background:repeating-linear-gradient(90deg,
   #fff 0 2px,transparent 2px 3px,#fff 3px 4px,transparent 4px 6px,#fff 6px 9px,transparent 9px 10px,
   #fff 10px 11px,transparent 11px 14px,#fff 14px 16px,transparent 16px 17px,#fff 17px 18px,transparent 18px 21px)}
-.menu{background:rgba(244,234,226,.96);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid var(--tinta);height:60px}
+.menu{background:rgba(244,241,235,.96);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);border-bottom:1px solid var(--tinta);height:60px}
 .menu .recipiente{height:100%;display:flex;align-items:center;justify-content:space-between;gap:16px}
 .logo{font-family:var(--serif);font-weight:700;font-size:1.25rem;text-decoration:none;white-space:nowrap}
 .logo em{color:var(--vermelho);font-style:normal}
@@ -87,7 +87,7 @@ p{margin:0 0 1em}
 .provisorio{position:relative;overflow:hidden;background:linear-gradient(155deg,#2a2622 0%,#5b4a3f 45%,#c9a58c 100%);color:var(--branco)}
 .provisorio img{width:100%;height:100%;object-fit:cover}
 .provisorio .legenda{position:absolute;left:12px;bottom:12px;background:rgba(42,32,27,.78);color:#fff;font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;padding:5px 10px}
-.g1{background:linear-gradient(160deg,#2a201b 0%,#9c5135 55%,#c1724f 100%)}
+.g1{background:linear-gradient(160deg,#2a201b 0%,#804a32 55%,#c1724f 100%)}
 .g2{background:linear-gradient(160deg,#3b332c 0%,#8c6f5a 60%,#e9d6c3 100%)}
 .g3{background:linear-gradient(160deg,#3a2e27 0%,#7d6a5e 50%,#d8c6b8 100%)}
 .g4{background:linear-gradient(160deg,#6b1a14 0%,#b8473a 50%,#f0c9b6 100%)}
@@ -98,7 +98,7 @@ p{margin:0 0 1em}
 .capa{padding-top:calc(var(--topo) + clamp(20px,4vw,40px));padding-bottom:0;position:relative}
 .capa-linha{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid var(--tinta);padding-bottom:10px;margin-bottom:12px}
 .capa-linha strong{color:var(--vermelho);font-weight:600}
-.capa-nome{font-size:clamp(3.2rem,10.4vw,10rem);line-height:.92;letter-spacing:-.05em;margin:0 0 clamp(18px,3vw,32px);overflow-wrap:anywhere}
+.capa-nome{font-size:clamp(3.2rem,8.6vw,8.5rem);line-height:.92;letter-spacing:-.05em;margin:0 0 clamp(18px,3vw,32px);overflow-wrap:anywhere}
 .capa-nome span{display:inline}
 .capa-nome .l1{display:block}
 .capa-nome .vermelho{color:var(--terracota)}
@@ -113,13 +113,15 @@ p{margin:0 0 1em}
 .capa-numeros div{display:flex;flex-direction:column-reverse;gap:6px}
 .capa-foto{position:relative;margin:0}
 .capa-foto .provisorio{aspect-ratio:4/5;width:100%}
-/* chamada de capa: caixinha branca com borda ao lado da foto */
-.chamada{position:absolute;left:clamp(-40px,-3vw,-16px);bottom:clamp(24px,5vw,56px);background:var(--branco);border:2px solid var(--tinta);padding:16px 18px;max-width:240px;box-shadow:6px 6px 0 var(--terracota)}
-.chamada small{display:block;font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--vermelho);font-weight:600;margin-bottom:6px}
-.chamada p{font-family:var(--serif);font-weight:700;font-size:1.25rem;line-height:1.1;margin:0 0 8px}
-.chamada ul{margin:0;padding:0;list-style:none;font-size:.86rem;line-height:1.4}
-.chamada li::before{content:"✦ ";color:var(--vermelho)}
-.selo{position:absolute;top:-18px;right:-10px;width:96px;height:96px;border-radius:50%;background:var(--vermelho);color:var(--branco);display:grid;place-items:center;text-align:center;font-family:var(--serif);font-weight:700;font-size:.95rem;line-height:1.05;transform:rotate(12deg);padding:10px}
+/* selo de agenda aberta na linha do topo da capa */
+.agenda{display:inline-flex;align-items:center;gap:7px;margin-left:10px;padding:3px 10px;border:1px solid var(--vermelho);border-radius:999px;color:var(--vermelho);font-weight:600;letter-spacing:.16em}
+.agenda::before{content:"";width:7px;height:7px;border-radius:50%;background:#2f8f4e}
+/* logos redondas das marcas na primeira dobra */
+.capa-marcas{margin-top:22px}
+.capa-marcas p{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;margin:0 0 10px;color:var(--cinza)}
+.capa-marcas ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.capa-marcas li{width:56px;height:56px;border-radius:50%;overflow:hidden;background:var(--branco);border:1px solid var(--papel-2);display:grid;place-items:center;box-shadow:0 2px 8px rgba(42,32,27,.08)}
+.capa-marcas img{width:100%;height:100%;object-fit:contain;padding:6px}
 /* faixa fina com marcas */
 .faixa-marcas{margin-top:clamp(40px,6vw,64px);background:var(--tinta);color:var(--branco);overflow:hidden;white-space:nowrap;padding:12px 0;border-top:3px solid var(--terracota)}
 .faixa-trilho{display:inline-flex;animation:rolar 40s linear infinite}
@@ -127,13 +129,17 @@ p{margin:0 0 1em}
 .faixa-trilho span::after{content:"●";font-style:normal;color:var(--terracota);font-size:.5rem;vertical-align:middle;margin-left:44px}
 @keyframes rolar{to{transform:translateX(-50%)}}
 @media (max-width:860px){
-  .capa-grade{grid-template-columns:1fr}
-  .capa-foto{max-width:460px;width:100%;margin:8px auto 0}
-  .chamada{left:12px;bottom:12px;max-width:min(240px,calc(100% - 24px))}
-  .selo{right:8px;top:-14px;width:84px;height:84px;font-size:.85rem}
+  .capa-grade{grid-template-columns:1.2fr .8fr;gap:20px}
+  .capa-nome{font-size:clamp(2.6rem,9vw,5rem)}
 }
 @media (max-width:600px){
-  .capa-nome{font-size:clamp(2.9rem,16vw,5.2rem)}
+  /* no celular a foto entra logo depois do nome */
+  .capa-grade{display:flex;flex-direction:column;gap:0}
+  .capa-texto{display:contents}
+  .capa-nome{order:1;font-size:clamp(2.9rem,16vw,5.2rem)}
+  .capa-foto{order:2;width:100%;margin:0 0 24px}
+  .capa-frase{order:3}.capa-botoes{order:4}.capa-numeros{order:5}.capa-marcas{order:6}
+  .agenda{margin:6px 0 0}
   .capa-nome span{display:block}
   .capa-numeros dt{font-size:.62rem;letter-spacing:.08em}
   .btn{width:100%}
@@ -319,11 +325,11 @@ p{margin:0 0 1em}
 <!-- ================= 1. CAPA ================= -->
 <section class="capa" id="inicio" aria-labelledby="titulo-capa">
   <div class="recipiente">
-    <div class="capa-linha"><span><strong>UGC Creator</strong> · Edição 01</span><span>Porto Alegre · Brasil</span></div>
-    <h1 class="capa-nome" id="titulo-capa"><span class="l1">Melissa</span> <span class="vermelho">Moller</span></h1>
+    <div class="capa-linha"><span><strong>UGC Creator</strong> · Edição 01 <span class="agenda">Agenda aberta</span></span><span>Porto Alegre · Brasil</span></div>
 
     <div class="capa-grade">
-      <div>
+      <div class="capa-texto">
+        <h1 class="capa-nome" id="titulo-capa"><span class="l1">Melissa</span> <span class="vermelho">Moller</span></h1>
         <p class="capa-frase">Crio vídeos que soam como conversa de amiga e vendem como anúncio para a sua marca.</p>
         <div class="capa-botoes">
           <a class="btn btn-vermelho" href="#contato">Falar comigo</a>
@@ -331,23 +337,17 @@ p{margin:0 0 1em}
         </div>
         <!-- Os três números da capa são preenchidos pelo array NUMEROS_CAPA no script -->
         <dl class="capa-numeros" id="capa-numeros"></dl>
+        <!-- Logos redondas das marcas: vêm do array LOGOS no script. Enquanto ele estiver vazio, este bloco não aparece. -->
+        <div class="capa-marcas" id="capa-marcas" hidden>
+          <p>Marcas com quem já criei</p>
+          <ul id="capa-logos"></ul>
+        </div>
       </div>
 
       <figure class="capa-foto">
         <!-- FOTO DA CAPA: para trocar, substitua o arquivo fotos/capa.jpg (de preferência vertical).
              object-position escolhe qual parte da foto aparece no recorte 4:5 (0% = topo, 100% = base). -->
         <div class="provisorio g1"><img src="fotos/capa.jpg" alt="Melissa Moller sorrindo, de blusa branca de renda, ao ar livre" width="900" height="1599" fetchpriority="high" style="object-position:50% 30%"></div>
-        <div class="selo" aria-hidden="true">Agenda aberta</div>
-        <!-- chamada de capa em caixinha branca com borda -->
-        <aside class="chamada" aria-label="Nesta edição">
-          <small>Nesta edição</small>
-          <p>Conteúdo que parece gente de verdade</p>
-          <ul>
-            <li>Roteiro aprovado antes</li>
-            <li>Entrega em até 72h úteis</li>
-            <li>Orgânico e anúncio</li>
-          </ul>
-        </aside>
       </figure>
     </div>
   </div>
@@ -535,6 +535,11 @@ const NUMEROS_CAPA = [
 const MARCAS = ['Marca 01','Marca 02','Marca 03','Marca 04','Marca 05','Marca 06',
                 'Marca 07','Marca 08','Marca 09','Marca 10','Marca 11','Marca 12'];
 
+// Logos redondas das marcas na primeira dobra.
+//  logo: caminho da imagem na pasta "logos" (de preferência quadrada, PNG ou JPG). Ex: { nome: 'Nivea', logo: 'logos/nivea.png' }
+//  Enquanto a lista estiver vazia, o bloco de logos não aparece no site.
+const LOGOS = [];
+
 // Três conteúdos de destaque.
 //  link: ONDE ENTRA O LINK DO VÍDEO (Reels, TikTok, YouTube ou Google Drive). Com "#" o card não sai da página.
 //  capa: ONDE ENTRA A CAPA. Coloque o caminho de uma imagem vertical 9:16, ex: 'capas/video1.jpg'.
@@ -615,6 +620,13 @@ const marcasHTML = MARCAS.map((m) => `<span>${esc(m)}</span>`).join('');
 // a lista vai duas vezes para a faixa rolar sem emenda; a cópia fica escondida dos leitores de tela
 $('#faixa-trilho').innerHTML = `<div>${marcasHTML}</div><div aria-hidden="true">${marcasHTML}</div>`;
 $('#faixa-trilho').querySelectorAll(':scope > div').forEach((d) => d.style.display = 'inline-flex');
+
+// Logos redondas das marcas (só aparece quando houver logos na lista)
+if (LOGOS.length) {
+  $('#capa-logos').innerHTML = LOGOS.map((l) =>
+    `<li title="${esc(l.nome)}"><img src="${esc(l.logo)}" alt="${esc(l.nome)}" width="56" height="56"></li>`).join('');
+  $('#capa-marcas').hidden = false;
+}
 
 // Fundo do bloco de mídia: imagem real se houver, senão degradê com legenda
 function midia(capa, cor, legenda, descricao) {

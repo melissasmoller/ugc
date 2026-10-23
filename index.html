@@ -117,7 +117,7 @@ p{margin:0 0 1em}
 .agenda{display:inline-flex;align-items:center;gap:7px;margin-left:10px;padding:3px 10px;border:1px solid var(--vermelho);border-radius:999px;color:var(--vermelho);font-weight:600;letter-spacing:.16em}
 .agenda::before{content:"";width:7px;height:7px;border-radius:50%;background:#2f8f4e}
 /* faixa em movimento com as logos das marcas (fundo branco para as logos aparecerem no formato original) */
-.faixa-marcas{margin-top:clamp(40px,6vw,64px);background:var(--branco);overflow:hidden;white-space:nowrap;padding:14px 0;border-top:3px solid var(--terracota);border-bottom:1px solid var(--papel-2)}
+.faixa-marcas{margin-top:clamp(40px,6vw,64px);background:var(--branco);overflow:hidden;white-space:nowrap;padding:16px 0;border-top:1px solid var(--terracota);border-bottom:1px solid var(--terracota)}
 .faixa-trilho{display:inline-flex;align-items:center;animation:rolar 40s linear infinite}
 .faixa-trilho span{display:inline-flex;align-items:center;padding:0 clamp(22px,3vw,40px)}
 .faixa-trilho img{height:44px;width:auto;max-width:none}
@@ -140,9 +140,9 @@ p{margin:0 0 1em}
 }
 
 /* ================= 2. SOBRE ================= */
-.sobre-grade{display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(28px,5vw,72px);align-items:start}
+.sobre-grade{display:grid;grid-template-columns:1fr 1fr;gap:clamp(28px,5vw,72px);align-items:stretch}
 .sobre-foto{margin:0;position:relative}
-.sobre-foto .provisorio{aspect-ratio:4/5}
+.sobre-foto .provisorio{height:100%;min-height:480px} /* a foto acompanha a altura do texto ao lado */
 .sobre-foto figcaption{font-size:.8rem;color:var(--cinza);margin-top:10px;font-style:italic}
 .sobre-texto p{font-size:1.12rem}
 /* capitular vermelha no texto de abertura */
@@ -153,7 +153,7 @@ p{margin:0 0 1em}
 .promessas span{font-weight:500}
 .assinatura{font-family:var(--serif);font-style:italic;font-weight:600;font-size:clamp(1.8rem,4vw,2.4rem);line-height:1;margin-top:20px}
 .assinatura small{display:block;font-family:var(--sans);font-style:normal;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;margin-top:10px;color:var(--cinza)}
-@media (max-width:820px){.sobre-grade{grid-template-columns:1fr}.sobre-foto{max-width:420px}}
+@media (max-width:820px){.sobre-grade{grid-template-columns:1fr}.sobre-foto{max-width:460px}.sobre-foto .provisorio{height:auto;min-height:0;aspect-ratio:4/5}}
 
 /* ================= 3. DESTAQUES ================= */
 .destaques-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(18px,3vw,36px)}
@@ -336,7 +336,7 @@ p{margin:0 0 1em}
       <figure class="capa-foto">
         <!-- FOTO DA CAPA: para trocar, substitua o arquivo fotos/capa.jpg (de preferência vertical).
              object-position escolhe qual parte da foto aparece no recorte 4:5 (0% = topo, 100% = base). -->
-        <div class="provisorio g1"><img src="fotos/capa.jpg" alt="Melissa Möller sorrindo, de blusa branca de renda, ao ar livre" width="900" height="1599" fetchpriority="high" style="object-position:50% 30%"></div>
+        <div class="provisorio g1"><img src="fotos/capa.jpg" alt="Melissa Möller sorrindo, de blusa branca de renda, ao ar livre" width="941" height="1176" fetchpriority="high"></div>
       </figure>
     </div>
   </div>
@@ -347,14 +347,13 @@ p{margin:0 0 1em}
   </div>
 </section>
 
-<hr class="filete">
 
 <!-- ================= 2. SOBRE MIM ================= -->
 <section class="secao" id="sobre" aria-labelledby="titulo-sobre">
   <div class="recipiente sobre-grade">
     <figure class="sobre-foto revelar">
       <!-- FOTO DO SOBRE: para trocar, substitua o arquivo fotos/sobre.jpg (de preferência vertical). -->
-      <div class="provisorio g2"><img src="fotos/sobre.jpg" alt="Melissa Möller sentada à beira da piscina ao pôr do sol, com a cidade ao fundo" width="900" height="1599" loading="lazy" style="object-position:50% 55%"></div>
+      <div class="provisorio g2"><img src="fotos/sobre.jpg" alt="Melissa Möller sentada à beira da piscina ao pôr do sol, com a cidade ao fundo" width="941" height="1672" loading="lazy" style="object-position:50% 60%"></div>
     </figure>
     <div class="sobre-texto revelar">
       <p class="cartola">Nº 02 · Sobre mim</p>

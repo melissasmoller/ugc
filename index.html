@@ -332,10 +332,9 @@ p{margin:0 0 1em}
       </div>
 
       <figure class="capa-foto">
-        <!-- FOTO DA CAPA: troque o bloco abaixo por
-             <img src="fotos/capa.jpg" alt="Melissa Moller segurando um produto e sorrindo para a câmera" width="800" height="1000">
-             mantendo a div com a classe "provisorio" em volta para manter o formato 4:5. -->
-        <div class="provisorio g1" role="img" aria-label="Espaço para a foto de capa da Melissa"><span class="legenda">foto da creator 4:5</span></div>
+        <!-- FOTO DA CAPA: para trocar, substitua o arquivo fotos/capa.jpg (de preferência vertical).
+             object-position escolhe qual parte da foto aparece no recorte 4:5 (0% = topo, 100% = base). -->
+        <div class="provisorio g1"><img src="fotos/capa.jpg" alt="Melissa Moller sorrindo, de blusa branca de renda, ao ar livre" width="900" height="1599" fetchpriority="high" style="object-position:50% 30%"></div>
         <div class="selo" aria-hidden="true">Agenda aberta</div>
         <!-- chamada de capa em caixinha branca com borda -->
         <aside class="chamada" aria-label="Nesta edição">
@@ -363,10 +362,8 @@ p{margin:0 0 1em}
 <section class="secao" id="sobre" aria-labelledby="titulo-sobre">
   <div class="recipiente sobre-grade">
     <figure class="sobre-foto revelar">
-      <!-- FOTO DO SOBRE: troque o bloco abaixo por
-           <img src="fotos/sobre.jpg" alt="Melissa gravando um vídeo com o celular no tripé" width="800" height="1000"> -->
-      <div class="provisorio g2" role="img" aria-label="Espaço para uma foto da Melissa nos bastidores"><span class="legenda">foto da creator 4:5</span></div>
-      <figcaption>Nos bastidores de uma gravação.</figcaption>
+      <!-- FOTO DO SOBRE: para trocar, substitua o arquivo fotos/sobre.jpg (de preferência vertical). -->
+      <div class="provisorio g2"><img src="fotos/sobre.jpg" alt="Melissa Moller sentada à beira da piscina ao pôr do sol, com a cidade ao fundo" width="900" height="1599" loading="lazy" style="object-position:50% 55%"></div>
     </figure>
     <div class="sobre-texto revelar">
       <p class="cartola">Nº 02 · Sobre mim</p>

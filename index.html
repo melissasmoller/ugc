@@ -98,13 +98,13 @@ p{margin:0 0 1em}
 .capa{padding-top:calc(var(--topo) + clamp(20px,4vw,40px));padding-bottom:0;position:relative}
 .capa-linha{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-size:.74rem;letter-spacing:.22em;text-transform:uppercase;border-bottom:1px solid var(--tinta);padding-bottom:10px;margin-bottom:12px}
 .capa-linha strong{color:var(--vermelho);font-weight:600}
-.capa-nome{font-size:clamp(3.2rem,8.6vw,8.5rem);line-height:.92;letter-spacing:-.05em;margin:0 0 clamp(18px,3vw,32px);overflow-wrap:anywhere}
+.capa-nome{font-size:clamp(3.2rem,7.6vw,7.6rem);line-height:.92;letter-spacing:-.05em;margin:0 0 clamp(18px,3vw,32px);overflow-wrap:anywhere}
 .capa-nome span{display:inline}
 .capa-nome .l1{display:block}
 .capa-nome .vermelho{color:var(--terracota)}
 .capa-grade{display:grid;grid-template-columns:1.05fr .95fr;gap:clamp(24px,4vw,56px);align-items:start}
 .capa-frase{font-family:var(--serif);font-size:clamp(1.35rem,2.6vw,2rem);line-height:1.2;font-weight:500;font-style:italic;max-width:24ch;margin-bottom:28px}
-.capa-botoes{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:36px}
+.capa-botoes{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:26px}
 .capa-numeros{display:grid;grid-template-columns:repeat(3,1fr);border-top:3px solid var(--tinta);border-bottom:1px solid var(--tinta);margin:0}
 .capa-numeros div{padding:14px 12px 12px 0}
 .capa-numeros div+div{border-left:1px solid var(--tinta);padding-left:14px}
@@ -117,9 +117,9 @@ p{margin:0 0 1em}
 .agenda{display:inline-flex;align-items:center;gap:7px;margin-left:10px;padding:3px 10px;border:1px solid var(--vermelho);border-radius:999px;color:var(--vermelho);font-weight:600;letter-spacing:.16em}
 .agenda::before{content:"";width:7px;height:7px;border-radius:50%;background:#2f8f4e}
 /* logos redondas das marcas na primeira dobra */
-.capa-marcas{margin-top:22px}
+.capa-marcas{margin:0 0 26px}
 .capa-marcas p{font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;margin:0 0 10px;color:var(--cinza)}
-.capa-marcas ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px}
+.capa-marcas ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
 .capa-marcas li{width:56px;height:56px;border-radius:50%;overflow:hidden;background:var(--branco);border:1px solid var(--papel-2);display:grid;place-items:center;box-shadow:0 2px 8px rgba(42,32,27,.08)}
 .capa-marcas img{width:100%;height:100%;object-fit:contain;padding:6px}
 /* faixa fina com marcas */
@@ -138,7 +138,7 @@ p{margin:0 0 1em}
   .capa-texto{display:contents}
   .capa-nome{order:1;font-size:clamp(2.9rem,16vw,5.2rem)}
   .capa-foto{order:2;width:100%;margin:0 0 24px}
-  .capa-frase{order:3}.capa-botoes{order:4}.capa-numeros{order:5}.capa-marcas{order:6}
+  .capa-frase{order:3}.capa-botoes{order:4}.capa-marcas{order:5}.capa-numeros{order:6}
   .agenda{margin:6px 0 0}
   .capa-nome span{display:block}
   .capa-numeros dt{font-size:.62rem;letter-spacing:.08em}
@@ -335,13 +335,13 @@ p{margin:0 0 1em}
           <a class="btn btn-vermelho" href="#contato">Falar comigo</a>
           <a class="btn btn-contorno" href="#trabalhos">Ver os trabalhos</a>
         </div>
-        <!-- Os três números da capa são preenchidos pelo array NUMEROS_CAPA no script -->
-        <dl class="capa-numeros" id="capa-numeros"></dl>
         <!-- Logos redondas das marcas: vêm do array LOGOS no script. Enquanto ele estiver vazio, este bloco não aparece. -->
         <div class="capa-marcas" id="capa-marcas" hidden>
           <p>Marcas com quem já criei</p>
           <ul id="capa-logos"></ul>
         </div>
+        <!-- Os três números da capa são preenchidos pelo array NUMEROS_CAPA no script -->
+        <dl class="capa-numeros" id="capa-numeros"></dl>
       </div>
 
       <figure class="capa-foto">
@@ -536,9 +536,20 @@ const MARCAS = ['Marca 01','Marca 02','Marca 03','Marca 04','Marca 05','Marca 06
                 'Marca 07','Marca 08','Marca 09','Marca 10','Marca 11','Marca 12'];
 
 // Logos redondas das marcas na primeira dobra.
-//  logo: caminho da imagem na pasta "logos" (de preferência quadrada, PNG ou JPG). Ex: { nome: 'Nivea', logo: 'logos/nivea.png' }
+//  logo: caminho da imagem na pasta "logos". fundo: cor do círculo atrás da logo.
+//  margem: espaço entre a logo e a borda do círculo (logos compridas precisam de mais).
+//  cobrir: true faz a logo preencher o círculo inteiro (bom para logos que já são redondas ou quadradas).
 //  Enquanto a lista estiver vazia, o bloco de logos não aparece no site.
-const LOGOS = [];
+const LOGOS = [
+  { nome: 'La Roche-Posay',          logo: 'logos/la-roche-posay.png', fundo: '#ffffff', margem: '8px' },
+  { nome: 'Nivea',                   logo: 'logos/nivea.png',          fundo: '#ffffff', cobrir: true },
+  { nome: 'Wella',                   logo: 'logos/wella.png',          fundo: '#ffffff', margem: '10px' },
+  { nome: 'Natura',                  logo: 'logos/natura.png',         fundo: '#f7f7f8', margem: '10px' },
+  { nome: 'Sebastian Professional',  logo: 'logos/sebastian.png',      fundo: '#262627', margem: '7px' },
+  { nome: 'Cif',                     logo: 'logos/cif.png',            fundo: '#ffffff', margem: '6px' },
+  { nome: 'Omo',                     logo: 'logos/omo.png',            fundo: '#ffffff', margem: '8px' },
+  { nome: 'JBL',                     logo: 'logos/jbl.png',            fundo: '#ffffff', cobrir: true }
+];
 
 // Três conteúdos de destaque.
 //  link: ONDE ENTRA O LINK DO VÍDEO (Reels, TikTok, YouTube ou Google Drive). Com "#" o card não sai da página.
@@ -624,7 +635,7 @@ $('#faixa-trilho').querySelectorAll(':scope > div').forEach((d) => d.style.displ
 // Logos redondas das marcas (só aparece quando houver logos na lista)
 if (LOGOS.length) {
   $('#capa-logos').innerHTML = LOGOS.map((l) =>
-    `<li title="${esc(l.nome)}"><img src="${esc(l.logo)}" alt="${esc(l.nome)}" width="56" height="56"></li>`).join('');
+    `<li title="${esc(l.nome)}" style="background:${esc(l.fundo || '#fff')}"><img src="${esc(l.logo)}" alt="${esc(l.nome)}" width="64" height="64" style="${l.cobrir ? 'object-fit:cover;padding:0' : 'padding:' + esc(l.margem || '8px')}"></li>`).join('');
   $('#capa-marcas').hidden = false;
 }
 

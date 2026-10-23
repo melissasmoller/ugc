@@ -183,6 +183,8 @@ p{margin:0 0 1em}
 .trabalho .etiqueta{position:absolute;top:10px;left:10px;background:var(--branco);color:var(--tinta);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:4px 8px;border:1px solid var(--tinta)}
 .trabalho h3{font-size:1.15rem;margin-top:12px}
 .trabalho p{font-size:.88rem;color:var(--cinza);margin:4px 0 0}
+.trabalho .assistir{color:var(--vermelho);font-weight:600;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
+.trabalho a:hover .assistir{text-decoration:underline}
 .trabalho[hidden]{display:none}
 @keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (max-width:1000px){.trabalhos-grade{grid-template-columns:repeat(3,1fr)}}
@@ -647,10 +649,10 @@ $('#trabalhos-grade').innerHTML = TRABALHOS.map((t, i) => {
   const capa = t.capa || (id ? `https://i.ytimg.com/vi/${id}/oardefault.jpg` : '');
   return `<figure class="trabalho" data-nicho="${esc(t.nicho)}">
     <a href="${esc(t.link || '#')}"${t.link && t.link !== '#' ? ' target="_blank" rel="noopener"' : ''} aria-label="Assistir ao vídeo ${esc(t.titulo)} (abre em nova aba)" style="text-decoration:none;display:block">
-      <div class="provisorio ${cores[i % 6]}"><span class="legenda">${esc(t.formato)}</span>
+      <div class="provisorio ${cores[i % 6]}">
         ${capa ? `<img src="${esc(capa)}" alt="" loading="lazy" onerror="this.remove()" onload="if(this.naturalWidth<=120)this.remove()">` : ''}
         <span class="etiqueta">${esc(t.nicho)}</span><span class="play" aria-hidden="true"></span></div>
-      <figcaption><h3>${esc(t.titulo)}</h3><p>${esc(t.formato)}</p></figcaption>
+      <figcaption><h3>${esc(t.titulo)}</h3><p class="assistir">Assistir Vídeo <span aria-hidden="true">→</span></p></figcaption>
     </a>
   </figure>`;
 }).join('');

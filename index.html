@@ -127,10 +127,10 @@ p{margin:0 0 1em}
 .agenda{display:inline-flex;align-items:center;gap:7px;margin-left:10px;padding:3px 10px;border:1px solid var(--vermelho);border-radius:999px;color:var(--vermelho);font-weight:600;letter-spacing:.16em}
 .agenda::before{content:"";width:7px;height:7px;border-radius:50%;background:#2f8f4e}
 /* faixa em movimento com as logos das marcas (fundo branco para as logos aparecerem no formato original) */
-.faixa-marcas{margin-top:clamp(40px,6vw,64px);background:var(--branco);overflow:hidden;white-space:nowrap;padding:16px 0;border-top:1px solid var(--terracota);border-bottom:1px solid var(--terracota)}
+.faixa-marcas{margin-top:clamp(40px,6vw,64px);background:var(--branco);overflow:hidden;white-space:nowrap;padding:14px 0;border-top:1px solid var(--terracota);border-bottom:1px solid var(--terracota)}
 .faixa-trilho{display:inline-flex;align-items:center;animation:rolar 40s linear infinite}
 .faixa-trilho span{display:inline-flex;align-items:center;padding:0 clamp(22px,3vw,40px)}
-.faixa-trilho img{height:44px;width:auto;max-width:none}
+.faixa-trilho img{height:38px;width:auto;max-width:none}
 @keyframes rolar{to{transform:translateX(-50%)}}
 @media (max-width:860px){
   .capa-grade{grid-template-columns:1.2fr .8fr;gap:20px}
@@ -775,7 +775,7 @@ function aplicarTextosFixos() {
 // a faixa tem duas metades iguais para rolar sem emenda; cada metade traz a lista duas vezes para cobrir telas largas.
 // Só a primeira lista leva o nome das marcas para leitores de tela; as repetições ficam escondidas.
 const logosHTML = (comNome) => LOGOS.map((l) =>
-  `<span title="${esc(l.nome)}"${comNome ? '' : ' aria-hidden="true"'}><img src="${esc(l.logo)}" alt="${comNome ? esc(l.nome) : ''}" height="44"></span>`).join('');
+  `<span title="${esc(l.nome)}"${comNome ? '' : ' aria-hidden="true"'}><img src="${esc(l.logo)}" alt="${comNome ? esc(l.nome) : ''}" height="38"></span>`).join('');
 $('#faixa-trilho').innerHTML = `<div>${logosHTML(true)}${logosHTML(false)}</div>` +
   `<div aria-hidden="true">${logosHTML(false)}${logosHTML(false)}</div>`;
 $('#faixa-trilho').querySelectorAll(':scope > div').forEach((d) => d.style.display = 'inline-flex');

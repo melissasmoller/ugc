@@ -579,19 +579,20 @@ const DESTAQUES = [
 const NICHOS_EN = { 'Beleza': 'Beauty', 'Casa e Pets': 'Home & Pets', 'Tech': 'Tech' };
 
 // Galeria de trabalhos. Os botões de filtro são criados a partir do campo "nicho", na ordem em que aparecem.
+//  video: arquivo do vídeo na pasta "videos" (toca no site com player limpo, sem marca do YouTube).
 //  link: endereço do vídeo. Se for do YouTube, a capa é puxada sozinha do próprio vídeo.
 //  capa: caminho de uma imagem própria, se quiser trocar a capa do YouTube (vazio usa a do YouTube).
 //  formato: o tipo de vídeo, que aparece embaixo do nome (formato_en é a versão em inglês).
 //  Para adicionar um vídeo, copie uma linha, troque o título e o link e mantenha a vírgula no fim.
 const TRABALHOS = [
-  { nicho: 'Beleza',      titulo: 'Cicaplast',                                                                    formato: 'Problema e solução', formato_en: 'Problem & solution', capa: 'capas/cicaplast.jpg', link: 'https://youtube.com/shorts/Z9V8CuWF4AY' },
-  { nicho: 'Beleza',      titulo: 'Nivea Luminous',                                                               formato: 'Depoimento',         formato_en: 'Testimonial',        capa: 'capas/nivea-luminous.jpg', link: 'https://youtube.com/shorts/bd_HpAMYnR8' },
-  { nicho: 'Beleza',      titulo: 'Color Brilliance',                                                             formato: 'Rotina',             formato_en: 'Routine',            capa: 'capas/color-brilliance.jpg', link: 'https://youtube.com/shorts/DfqVKFOQsfA' },
-  { nicho: 'Beleza',      titulo: 'Óleo Sève Natura',             titulo_en: 'Natura Sève Body Oil',              formato: 'Storytelling',       formato_en: 'Storytelling',       capa: 'capas/seve-natura.jpg', link: 'https://youtube.com/shorts/7455cq1YNYs' },
-  { nicho: 'Beleza',      titulo: 'Sebastian Penetraitt',                                                         formato: 'Tutorial',           formato_en: 'Tutorial',           capa: 'capas/sebastian-penetraitt.jpg?v=2', link: 'https://youtube.com/shorts/3IBu04R6HLQ' },
-  { nicho: 'Casa e Pets', titulo: 'Cif Detergente e Cif Cremoso', titulo_en: 'Cif Dish Soap & Cif Cream Cleaner', formato: 'Antes e depois',     formato_en: 'Before & after',     capa: 'capas/cif.jpg?v=2', link: 'https://youtube.com/shorts/ULW1LS_bN0g' },
-  { nicho: 'Casa e Pets', titulo: 'Omo Ciclo Rápido',             titulo_en: 'Omo Quick Cycle',                   formato: 'Lifestyle',          formato_en: 'Lifestyle',          capa: 'capas/omo-ciclo-rapido.jpg', link: 'https://youtube.com/shorts/Jkq9UDnrVCY' },
-  { nicho: 'Tech',        titulo: 'JBL GO5',                                                                      formato: 'Storytelling',       formato_en: 'Storytelling',       capa: 'capas/jbl-go5.jpg', link: 'https://youtu.be/pcP8dojiVCM' }
+  { nicho: 'Beleza',      titulo: 'Cicaplast',                                                                    formato: 'Problema e solução', formato_en: 'Problem & solution', capa: 'capas/cicaplast.jpg', video: 'videos/cicaplast.mp4', link: 'https://youtube.com/shorts/Z9V8CuWF4AY' },
+  { nicho: 'Beleza',      titulo: 'Nivea Luminous',                                                               formato: 'Depoimento',         formato_en: 'Testimonial',        capa: 'capas/nivea-luminous.jpg', video: 'videos/nivea-luminous.mp4', link: 'https://youtube.com/shorts/bd_HpAMYnR8' },
+  { nicho: 'Beleza',      titulo: 'Color Brilliance',                                                             formato: 'Rotina',             formato_en: 'Routine',            capa: 'capas/color-brilliance.jpg', video: 'videos/color-brilliance.mp4', link: 'https://youtube.com/shorts/DfqVKFOQsfA' },
+  { nicho: 'Beleza',      titulo: 'Óleo Sève Natura',             titulo_en: 'Natura Sève Body Oil',              formato: 'Storytelling',       formato_en: 'Storytelling',       capa: 'capas/seve-natura.jpg', video: 'videos/seve-natura.mp4', link: 'https://youtube.com/shorts/7455cq1YNYs' },
+  { nicho: 'Beleza',      titulo: 'Sebastian Penetraitt',                                                         formato: 'Tutorial',           formato_en: 'Tutorial',           capa: 'capas/sebastian-penetraitt.jpg?v=2', video: 'videos/sebastian-penetraitt.mp4', link: 'https://youtube.com/shorts/3IBu04R6HLQ' },
+  { nicho: 'Casa e Pets', titulo: 'Cif Detergente e Cif Cremoso', titulo_en: 'Cif Dish Soap & Cif Cream Cleaner', formato: 'Antes e depois',     formato_en: 'Before & after',     capa: 'capas/cif.jpg?v=2', video: 'videos/cif.mp4', link: 'https://youtube.com/shorts/ULW1LS_bN0g' },
+  { nicho: 'Casa e Pets', titulo: 'Omo Ciclo Rápido',             titulo_en: 'Omo Quick Cycle',                   formato: 'Lifestyle',          formato_en: 'Lifestyle',          capa: 'capas/omo-ciclo-rapido.jpg', video: 'videos/omo-ciclo-rapido.mp4', link: 'https://youtube.com/shorts/Jkq9UDnrVCY' },
+  { nicho: 'Tech',        titulo: 'JBL GO5',                                                                      formato: 'Storytelling',       formato_en: 'Storytelling',       capa: 'capas/jbl-go5.jpg', video: 'videos/jbl-go5.mp4', link: 'https://youtu.be/pcP8dojiVCM' }
 ];
 
 // Seis serviços (o número é gerado automaticamente pela ordem).
@@ -825,7 +826,7 @@ function renderizar() {
     const capa = t.capa || (id ? `https://i.ytimg.com/vi/${id}/oardefault.jpg` : '');
     const titulo = tr(t, 'titulo');
     return `<figure class="trabalho" data-nicho="${esc(t.nicho)}">
-      <a href="${esc(t.link || '#')}"${id ? ` data-video="${id}"` : ''} aria-label="${esc(f().assistirVideo(titulo))}" style="text-decoration:none;display:block">
+      <a href="${esc(t.video || t.link || '#')}"${t.video ? ` data-arquivo="${esc(t.video)}" data-capa="${esc(capa)}"` : (id ? ` data-video="${id}"` : '')} aria-label="${esc(f().assistirVideo(titulo))}" style="text-decoration:none;display:block">
         <div class="provisorio ${cores[i % 6]}">
           ${capa ? `<img src="${esc(capa)}" alt="" loading="lazy" onerror="this.remove()" onload="if(this.naturalWidth<=120)this.remove()">` : ''}
           <span class="etiqueta">${esc(nomeNicho(t.nicho))}</span><span class="play" aria-hidden="true"></span></div>
@@ -1008,13 +1009,19 @@ function tocarVideo(link) {
   tocando = { link, caixa, capa: caixa.innerHTML };
   link.classList.add('tocando');
   const titulo = link.querySelector('h3') ? link.querySelector('h3').textContent : '';
-  // youtube-nocookie: o player não grava cookies de rastreamento antes de a pessoa dar play
-  caixa.insertAdjacentHTML('beforeend', `<iframe class="player" src="https://www.youtube-nocookie.com/embed/${link.dataset.video}?autoplay=1&rel=0&playsinline=1&modestbranding=1"
-    title="${esc(titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`);
+  if (link.dataset.arquivo) {
+    // vídeo guardado no próprio site: player limpo, sem marca do YouTube
+    caixa.insertAdjacentHTML('beforeend', `<video class="player" src="${esc(link.dataset.arquivo)}" poster="${esc(link.dataset.capa || '')}"
+      controls autoplay playsinline preload="auto" aria-label="${esc(titulo)}"></video>`);
+  } else {
+    // vídeo do YouTube (para quando um vídeo novo ainda não foi baixado para a pasta "videos")
+    caixa.insertAdjacentHTML('beforeend', `<iframe class="player" src="https://www.youtube-nocookie.com/embed/${link.dataset.video}?autoplay=1&rel=0&playsinline=1&modestbranding=1"
+      title="${esc(titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`);
+  }
   if (obsTela) obsTela.observe(caixa);
 }
 document.addEventListener('click', (e) => {
-  const link = e.target.closest('a[data-video]');
+  const link = e.target.closest('a[data-arquivo], a[data-video]');
   if (!link) return;
   e.preventDefault();
   if (!link.classList.contains('tocando')) tocarVideo(link);

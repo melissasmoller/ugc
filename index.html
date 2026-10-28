@@ -127,7 +127,8 @@ p{margin:0 0 1em}
 .agenda{display:inline-flex;align-items:center;gap:7px;margin-left:10px;padding:3px 10px;border:1px solid var(--vermelho);border-radius:999px;color:var(--vermelho);font-weight:600;letter-spacing:.16em}
 .agenda::before{content:"";width:7px;height:7px;border-radius:50%;background:#2f8f4e}
 /* faixa em movimento com as logos das marcas (fundo branco para as logos aparecerem no formato original) */
-.faixa-marcas{margin-top:clamp(40px,6vw,64px);background:var(--branco);overflow:hidden;white-space:nowrap;padding:14px 0;border-top:1px solid var(--terracota);border-bottom:1px solid var(--terracota)}
+.faixa-titulo{margin:clamp(40px,6vw,64px) 0 12px;padding:0 16px;text-align:center;font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--cinza)}
+.faixa-marcas{background:var(--branco);overflow:hidden;white-space:nowrap;padding:14px 0;border-top:1px solid var(--terracota);border-bottom:1px solid var(--terracota)}
 .faixa-trilho{display:inline-flex;align-items:center;vertical-align:top;animation:rolar 40s linear infinite}
 .faixa-trilho span{display:inline-flex;align-items:center;padding:0 clamp(22px,3vw,40px)}
 .faixa-trilho img{height:38px;width:auto;max-width:none}
@@ -318,7 +319,7 @@ p{margin:0 0 1em}
 <header class="cabecalho">
   <div class="expediente">
     <div class="recipiente">
-      <span data-i18n="expediente">Portfólio · Edição 01</span>
+      <span data-i18n="expediente">Portfólio · UGC Creator</span>
       <span class="codigo-barras" role="img" aria-label="Código de barras decorativo" data-i18n-aria="codigoBarras"></span>
     </div>
   </div>
@@ -351,7 +352,7 @@ p{margin:0 0 1em}
 <!-- ================= 1. CAPA ================= -->
 <section class="capa" id="inicio" aria-labelledby="titulo-capa">
   <div class="recipiente">
-    <div class="capa-linha"><span><strong>UGC Creator</strong> · <span data-i18n="edicao">Edição 01</span> <span class="agenda" data-i18n="agenda">Agenda aberta</span></span><span data-i18n="local">Porto Alegre · Brasil</span></div>
+    <div class="capa-linha"><span><strong>UGC Creator</strong> <span class="agenda" data-i18n="agenda">Agenda aberta</span></span><span data-i18n="local">Porto Alegre · Brasil</span></div>
 
     <div class="capa-grade">
       <div class="capa-texto">
@@ -374,7 +375,8 @@ p{margin:0 0 1em}
   </div>
 
   <!-- faixa em movimento com as logos das marcas (array LOGOS no script) -->
-  <div class="faixa-marcas" aria-label="Marcas atendidas" data-i18n-aria="faixaMarcas">
+  <p class="faixa-titulo" data-i18n="faixaTitulo">Marcas com que já criei conteúdo</p>
+  <div class="faixa-marcas" aria-label="Marcas com que já criei conteúdo" data-i18n-aria="faixaMarcas">
     <div class="faixa-trilho" id="faixa-trilho"></div>
   </div>
 </section>
@@ -388,7 +390,7 @@ p{margin:0 0 1em}
       <div class="provisorio g2"><img src="fotos/sobre.jpg" alt="Melissa Möller sentada à beira da piscina ao pôr do sol, com a cidade ao fundo" data-i18n-alt="fotoSobre" width="941" height="1672" loading="lazy" style="object-position:50% 60%"></div>
     </figure>
     <div class="sobre-texto revelar">
-      <p class="cartola" data-i18n="cartolaSobre">Nº 02 · Sobre mim</p>
+      <p class="cartola" data-i18n="cartolaSobre">Sobre mim</p>
       <h2 class="titulo-secao" id="titulo-sobre" data-i18n="tituloSobre">Prazer, eu sou a <em>Mel</em></h2>
       <p class="capitular" data-i18n="sobre1">Sou gaúcha de Porto Alegre, 40+, e crio o tipo de vídeo que faz a pessoa parar o dedo no feed e pensar: “eu quero isso”.</p>
       <p data-i18n="sobre2">Falo do seu produto como quem usa de verdade, com a segurança de quem não precisa fingir nada. É essa naturalidade que transforma uma visualização em confiança, e confiança em venda.</p>
@@ -408,7 +410,7 @@ p{margin:0 0 1em}
 <!-- ================= 3. CONTEÚDOS DE DESTAQUE ================= -->
 <section class="secao" id="destaques" aria-labelledby="titulo-destaques">
   <div class="recipiente">
-    <p class="cartola revelar" data-i18n="cartolaDestaques">Nº 03 · Destaques</p>
+    <p class="cartola revelar" data-i18n="cartolaDestaques">Destaques</p>
     <h2 class="titulo-secao revelar" id="titulo-destaques" data-i18n="tituloDestaques">Os conteúdos que <em>mais</em> renderam</h2>
     <!-- Os três cards são montados pelo array DESTAQUES no script.
          Lá você troca o link do vídeo (campo "link") e a capa (campo "capa"). -->
@@ -421,7 +423,7 @@ p{margin:0 0 1em}
 <!-- ================= 4. TRABALHOS POR NICHO ================= -->
 <section class="secao" id="trabalhos" aria-labelledby="titulo-trabalhos">
   <div class="recipiente">
-    <p class="cartola revelar" data-i18n="cartolaTrabalhos">Nº 04 · Trabalhos</p>
+    <p class="cartola revelar" data-i18n="cartolaTrabalhos">Trabalhos</p>
     <h2 class="titulo-secao revelar" id="titulo-trabalhos" data-i18n="tituloTrabalhos">Trabalhos por <em>nicho</em></h2>
     <div class="filtros" id="filtros" role="group" aria-label="Filtrar trabalhos por nicho" data-i18n-aria="filtrar"></div>
     <p class="sr-only" id="aviso-filtro" aria-live="polite"></p>
@@ -435,7 +437,7 @@ p{margin:0 0 1em}
 <!-- ================= 5. COMO EU TE AJUDO ================= -->
 <section class="secao" id="servicos" aria-labelledby="titulo-servicos">
   <div class="recipiente">
-    <p class="cartola revelar" data-i18n="cartolaServicos">Nº 05 · Serviços</p>
+    <p class="cartola revelar" data-i18n="cartolaServicos">Serviços</p>
     <h2 class="titulo-secao revelar" id="titulo-servicos" data-i18n="tituloServicos">Como eu <em>te ajudo</em></h2>
     <!-- Os seis serviços vêm do array SERVICOS no script -->
     <div class="servicos-grade" id="servicos-grade"></div>
@@ -447,7 +449,7 @@ p{margin:0 0 1em}
 <!-- ================= 6. NÚMEROS E DEPOIMENTOS ================= -->
 <section class="secao" id="numeros" aria-labelledby="titulo-numeros">
   <div class="recipiente">
-    <p class="cartola revelar" data-i18n="cartolaNumeros">Nº 06 · Números</p>
+    <p class="cartola revelar" data-i18n="cartolaNumeros">Números</p>
     <h2 class="titulo-secao revelar" id="titulo-numeros" data-i18n="tituloNumeros">Números e <em>depoimentos</em></h2>
     <!-- Métricas: array METRICAS no script -->
     <dl class="metricas revelar" id="metricas"></dl>
@@ -468,7 +470,7 @@ p{margin:0 0 1em}
 <section class="secao contato" id="contato" aria-labelledby="titulo-contato">
   <div class="recipiente contato-grade">
     <div class="contato-intro revelar">
-      <p class="cartola" data-i18n="cartolaContato">Nº 07 · Contato</p>
+      <p class="cartola" data-i18n="cartolaContato">Contato</p>
       <h2 class="titulo-secao" id="titulo-contato" data-i18n="tituloContato">Bora criar <em>juntos?</em></h2>
       <p data-i18n="contatoTexto">Me conta sobre a sua marca, o produto e o que você quer alcançar. Eu respondo com uma ideia de roteiro e um orçamento sob medida.</p>
       <div class="canais">
@@ -605,7 +607,7 @@ const TRABALHOS = [
   { nicho: 'Beleza',       titulo: 'Color Brilliance',                                                         capa: 'capas/color-brilliance.jpg', link: 'https://youtube.com/shorts/DfqVKFOQsfA' },
   { nicho: 'Beleza',       titulo: 'Óleo Seve Natura',             titulo_en: 'Natura Sève Body Oil',          capa: 'capas/seve-natura.jpg', link: 'https://youtube.com/shorts/7455cq1YNYs' },
   { nicho: 'Beleza',       titulo: 'Sebastian Penetraitt',                                                     capa: 'capas/sebastian-penetraitt.jpg', link: 'https://youtube.com/shorts/3IBu04R6HLQ' },
-  { nicho: 'Casa e Pets',  titulo: 'Cif Detergente e Concentrado', titulo_en: 'Cif Dish Soap & Concentrate',   capa: '', link: 'https://youtube.com/shorts/Udt1wiDdbC0' },
+  { nicho: 'Casa e Pets',  titulo: 'Cif Detergente e Concentrado', titulo_en: 'Cif Dish Soap & Concentrate',   capa: 'capas/cif.jpg', link: 'https://youtube.com/shorts/sDz2NZLvwO0' },
   { nicho: 'Casa e Pets',  titulo: 'Omo Ciclo Rápido',             titulo_en: 'Omo Quick Cycle',               capa: 'capas/omo-ciclo-rapido.jpg', link: 'https://youtube.com/shorts/Jkq9UDnrVCY' },
   { nicho: 'Tech',         titulo: 'JBL GO5',                                                                  capa: 'capas/jbl-go5.jpg', link: 'https://youtu.be/pcP8dojiVCM' }
 ];
@@ -679,20 +681,20 @@ const TEXTOS_EN = {
   tituloPagina: 'Melissa Möller · UGC Creator Portfolio',
   descricaoPagina: 'Portfolio of Melissa Möller, UGC Creator: videos, photos and unboxings that make brands feel human and sell more.',
   pular: 'Skip to content',
-  expediente: 'Portfolio · Issue 01',
+  expediente: 'Portfolio · UGC Creator',
   codigoBarras: 'Decorative barcode',
   menuPrincipal: 'Main menu',
   menuSobre: 'About', menuDestaques: 'Highlights', menuTrabalhos: 'Work', menuServicos: 'Services', menuNumeros: 'Numbers', menuContato: 'Contact',
-  edicao: 'Issue 01',
   agenda: 'Booking open',
   local: 'Porto Alegre · Brazil',
   capaFrase: 'I create videos that feel like a chat with a friend and sell like an ad for your brand.',
   falarComigo: 'Let’s talk',
   verTrabalhos: 'See my work',
   fotoCapa: 'Melissa Möller smiling in a white lace top, outdoors',
-  faixaMarcas: 'Brands I’ve worked with',
+  faixaMarcas: 'Brands I’ve created content for',
+  faixaTitulo: 'Brands I’ve created content for',
   fotoSobre: 'Melissa Möller sitting by the pool at sunset, with the city behind her',
-  cartolaSobre: 'No. 02 · About me',
+  cartolaSobre: 'About me',
   tituloSobre: 'Nice to meet you, I’m <em>Mel</em>',
   sobre1: 'I’m from Porto Alegre, in southern Brazil, 40+, and I make the kind of video that stops the thumb mid-scroll and makes people think: “I want that.”',
   sobre2: 'I talk about your product like someone who really uses it, with the confidence of someone who has nothing to fake. That authenticity is what turns a view into trust, and trust into a sale.',
@@ -700,18 +702,18 @@ const TEXTOS_EN = {
   promessa1: 'Script approved by you before filming.',
   promessa2: 'One round of revisions included in every delivery.',
   promessa3: 'Delivery within 72 business hours.',
-  cartolaDestaques: 'No. 03 · Highlights',
+  cartolaDestaques: 'Highlights',
   tituloDestaques: 'The content that performed <em>best</em>',
-  cartolaTrabalhos: 'No. 04 · Work',
+  cartolaTrabalhos: 'Work',
   tituloTrabalhos: 'Work by <em>niche</em>',
   filtrar: 'Filter work by niche',
-  cartolaServicos: 'No. 05 · Services',
+  cartolaServicos: 'Services',
   tituloServicos: 'How I <em>help you</em>',
-  cartolaNumeros: 'No. 06 · Numbers',
+  cartolaNumeros: 'Numbers',
   tituloNumeros: 'Numbers and <em>testimonials</em>',
   resultadosTitulo: 'Campaign results',
   depoimentosTitulo: 'Who I’ve worked with',
-  cartolaContato: 'No. 07 · Contact',
+  cartolaContato: 'Contact',
   tituloContato: 'Let’s create <em>together?</em>',
   contatoTexto: 'Tell me about your brand, your product and what you want to achieve. I’ll reply with a script idea and a tailored quote.',
   seuNome: 'Your name', seuEmail: 'Your email', mensagem: 'Message',

@@ -286,6 +286,20 @@ p{margin:0 0 1em}
 .captura h2{font-size:clamp(1.9rem,6vw,2.4rem);margin:8px 0 12px;padding-right:30px}
 .captura .btn{width:100%}
 
+/* ================= PLAYER DE VÍDEO ================= */
+.video-fundo{position:fixed;inset:0;z-index:320;background:rgba(42,32,27,.92);display:none;align-items:center;justify-content:center;padding:16px}
+.video-fundo.aberto{display:flex}
+.video-caixa{position:relative;height:min(88vh,860px);aspect-ratio:9/16;max-width:100%;animation:aparecer .3s ease}
+.video-tela{width:100%;height:100%;background:#000}
+.video-tela iframe{width:100%;height:100%;border:0;display:block}
+.video-fechar{position:absolute;top:-6px;right:-52px;width:44px;height:44px;background:none;border:1px solid rgba(255,255,255,.6);border-radius:50%;color:#fff;font-size:1.6rem;line-height:1;cursor:pointer}
+.video-fechar:hover{background:rgba(255,255,255,.12)}
+.video-fechar:focus-visible{outline-color:#fff}
+@media (max-width:600px){
+  .video-caixa{height:auto;width:100%;max-height:calc(100vh - 90px)}
+  .video-fechar{top:-54px;right:0}
+}
+
 /* ================= ANIMAÇÃO AO ROLAR ================= */
 .js .revelar{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
 .js .revelar.visivel{opacity:1;transform:none}
@@ -503,6 +517,14 @@ p{margin:0 0 1em}
   </div>
 </footer>
 
+<!-- ================= PLAYER DE VÍDEO (os vídeos tocam aqui, sem sair do portfólio) ================= -->
+<div class="video-fundo" id="video-fundo">
+  <div class="video-caixa" role="dialog" aria-modal="true" aria-label="Vídeo" id="video-caixa">
+    <button class="video-fechar" type="button" id="video-fechar" aria-label="Fechar vídeo" data-i18n-aria="fecharVideo">×</button>
+    <div class="video-tela" id="video-tela"></div>
+  </div>
+</div>
+
 <!-- ================= CARD DE CAPTURA (aparece após 7 segundos, uma vez por visita) ================= -->
 <div class="captura-fundo" id="captura-fundo">
   <div class="captura" role="dialog" aria-modal="true" aria-labelledby="captura-titulo">
@@ -700,14 +722,15 @@ const TEXTOS_EN = {
   capturaTitulo: 'Want my full media kit?',
   capturaTexto: 'Leave your name and email and I’ll send you my media kit with formats, rates and case studies.',
   nome: 'Name', email: 'Email',
-  queroReceber: 'Send it to me'
+  queroReceber: 'Send it to me',
+  fecharVideo: 'Close video'
 };
 
 // Textos que o script monta na hora, nos dois idiomas.
 const FRASES = {
   pt: {
     todos: 'Todos', assistir: 'Assistir Vídeo', abrirMenu: 'Abrir menu', fecharMenu: 'Fechar menu',
-    assistirVideo: (t) => `Assistir ao vídeo ${t} (abre em nova aba)`,
+    assistirVideo: (t) => `Assistir ao vídeo ${t}`,
     assistirDestaque: (t, n, r) => `Assistir: ${t}, ${n} ${r}`,
     capaVideo: 'capa do vídeo 9:16', capaDe: (t) => `Capa do vídeo ${t}`,
     avisoFiltro: (n, nicho) => `${n} trabalhos em ${nicho}`,
@@ -717,7 +740,7 @@ const FRASES = {
   },
   en: {
     todos: 'All', assistir: 'Watch video', abrirMenu: 'Open menu', fecharMenu: 'Close menu',
-    assistirVideo: (t) => `Watch the video ${t} (opens in a new tab)`,
+    assistirVideo: (t) => `Watch the video ${t}`,
     assistirDestaque: (t, n, r) => `Watch: ${t}, ${n} ${r}`,
     capaVideo: 'video cover 9:16', capaDe: (t) => `Video cover: ${t}`,
     avisoFiltro: (n, nicho) => `${n} pieces in ${nicho}`,
@@ -796,7 +819,9 @@ function renderizar() {
     `<div><dt>${esc(tr(n, 'rotulo'))}</dt><dd>${esc(n.valor)}</dd></div>`).join('');
 
   $('#destaques-grade').innerHTML = DESTAQUES.map((d, i) => {
-    const externo = d.link && d.link !== '#' ? ' target="_blank" rel="noopener"' : '';
+    // vídeo do YouTube abre no player do próprio portfólio; outros links (Instagram, TikTok, Drive) abrem em nova aba
+    const idDestaque = idYouTube(d.link);
+    const externo = idDestaque ? ` data-video="${idDestaque}"` : (d.link && d.link !== '#' ? ' target="_blank" rel="noopener"' : '');
     const titulo = tr(d, 'titulo'), rotulo = tr(d, 'rotulo');
     return `<a class="destaque revelar" href="${esc(d.link || '#')}"${externo} aria-label="${esc(f().assistirDestaque(titulo, d.numero, rotulo))}">
       ${midia(d.capa, d.cor || cores[i % 6], f().capaVideo, f().capaDe(titulo))}<span class="play" aria-hidden="true"></span></div>
@@ -817,7 +842,7 @@ function renderizar() {
     const capa = t.capa || (id ? `https://i.ytimg.com/vi/${id}/oardefault.jpg` : '');
     const titulo = tr(t, 'titulo');
     return `<figure class="trabalho" data-nicho="${esc(t.nicho)}">
-      <a href="${esc(t.link || '#')}"${t.link && t.link !== '#' ? ' target="_blank" rel="noopener"' : ''} aria-label="${esc(f().assistirVideo(titulo))}" style="text-decoration:none;display:block">
+      <a href="${esc(t.link || '#')}"${id ? ` data-video="${id}"` : ''} aria-label="${esc(f().assistirVideo(titulo))}" style="text-decoration:none;display:block">
         <div class="provisorio ${cores[i % 6]}">
           ${capa ? `<img src="${esc(capa)}" alt="" loading="lazy" onerror="this.remove()" onload="if(this.naturalWidth<=120)this.remove()">` : ''}
           <span class="etiqueta">${esc(nomeNicho(t.nicho))}</span><span class="play" aria-hidden="true"></span></div>
@@ -962,6 +987,8 @@ enviar($('#form-captura'), $('#captura-ok'), (nome) => f().okCaptura(nome));
 const fundo = $('#captura-fundo');
 let focoAnterior = null;
 function abrirCaptura() {
+  // se a pessoa estiver assistindo a um vídeo, o card espera o vídeo fechar
+  if (videoFundo.classList.contains('aberto')) { setTimeout(abrirCaptura, 3000); return; }
   focoAnterior = document.activeElement;
   fundo.classList.add('aberto');
   document.body.style.overflow = 'hidden';
@@ -978,10 +1005,48 @@ try { jaVisto = sessionStorage.getItem('midiaKitVisto') === '1'; } catch (e) {}
 if (!jaVisto) setTimeout(abrirCaptura, 7000);
 $('#captura-fechar').addEventListener('click', fecharCaptura);
 fundo.addEventListener('click', (e) => { if (e.target === fundo) fecharCaptura(); });
+
+// Player de vídeo: os vídeos do YouTube tocam numa janela dentro do portfólio, sem levar a pessoa para o YouTube
+const videoFundo = $('#video-fundo');
+let focoAntesDoVideo = null;
+function abrirVideo(id, titulo) {
+  focoAntesDoVideo = document.activeElement;
+  // youtube-nocookie: o player não grava cookies de rastreamento antes de a pessoa dar play
+  $('#video-tela').innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1&modestbranding=1"
+    title="${esc(titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
+  $('#video-caixa').setAttribute('aria-label', titulo);
+  videoFundo.classList.add('aberto');
+  document.body.style.overflow = 'hidden';
+  $('#video-fechar').focus();
+}
+function fecharVideo() {
+  $('#video-tela').innerHTML = ''; // tirar o player é o que faz o vídeo parar de tocar
+  videoFundo.classList.remove('aberto');
+  document.body.style.overflow = '';
+  if (focoAntesDoVideo && focoAntesDoVideo.focus) focoAntesDoVideo.focus();
+}
+document.addEventListener('click', (e) => {
+  const card = e.target.closest('a[data-video]');
+  if (!card) return;
+  e.preventDefault();
+  abrirVideo(card.dataset.video, card.querySelector('h3') ? card.querySelector('h3').textContent : '');
+});
+$('#video-fechar').addEventListener('click', fecharVideo);
+videoFundo.addEventListener('click', (e) => { if (e.target === videoFundo) fecharVideo(); });
+
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    if (fundo.classList.contains('aberto')) fecharCaptura();
+    if (videoFundo.classList.contains('aberto')) fecharVideo();
+    else if (fundo.classList.contains('aberto')) fecharCaptura();
     else if (links.classList.contains('aberto')) { fecharMenu(); hamburguer.focus(); }
+  }
+  // com o vídeo aberto, o Tab fica no botão de fechar e no player
+  if (e.key === 'Tab' && videoFundo.classList.contains('aberto')) {
+    const focaveis = [$('#video-fechar'), $('#video-tela iframe')].filter(Boolean);
+    const i = focaveis.indexOf(document.activeElement);
+    e.preventDefault();
+    focaveis[(i + (e.shiftKey ? -1 : 1) + focaveis.length) % focaveis.length].focus();
+    return;
   }
   // mantém o foco do teclado dentro do card enquanto ele está aberto
   if (e.key === 'Tab' && fundo.classList.contains('aberto')) {

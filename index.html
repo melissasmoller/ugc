@@ -196,8 +196,7 @@ p{margin:0 0 1em}
 .trabalho .etiqueta{position:absolute;top:10px;left:10px;background:var(--branco);color:var(--tinta);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:4px 8px;border:1px solid var(--tinta)}
 .trabalho h3{font-size:1.15rem;margin-top:12px}
 .trabalho p{font-size:.88rem;color:var(--cinza);margin:4px 0 0}
-.trabalho .assistir{color:var(--vermelho);font-weight:600;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
-.trabalho a:hover .assistir{text-decoration:underline}
+.trabalho .formato{color:var(--vermelho);font-weight:600;font-size:.78rem;letter-spacing:.14em;text-transform:uppercase}
 .trabalho[hidden]{display:none}
 @keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (max-width:1000px){.trabalhos-grade{grid-template-columns:repeat(3,1fr)}}
@@ -600,16 +599,17 @@ const NICHOS_EN = { 'Beleza': 'Beauty', 'Casa e Pets': 'Home & Pets', 'Tech': 'T
 // Galeria de trabalhos. Os botões de filtro são criados a partir do campo "nicho", na ordem em que aparecem.
 //  link: endereço do vídeo. Se for do YouTube, a capa é puxada sozinha do próprio vídeo.
 //  capa: caminho de uma imagem própria, se quiser trocar a capa do YouTube (vazio usa a do YouTube).
+//  formato: o tipo de vídeo, que aparece embaixo do nome (formato_en é a versão em inglês).
 //  Para adicionar um vídeo, copie uma linha, troque o título e o link e mantenha a vírgula no fim.
 const TRABALHOS = [
-  { nicho: 'Beleza',       titulo: 'Cicaplast',                                                                capa: 'capas/cicaplast.jpg', link: 'https://youtube.com/shorts/Z9V8CuWF4AY' },
-  { nicho: 'Beleza',       titulo: 'Nivea Luminous',                                                           capa: 'capas/nivea-luminous.jpg', link: 'https://youtube.com/shorts/bd_HpAMYnR8' },
-  { nicho: 'Beleza',       titulo: 'Color Brilliance',                                                         capa: 'capas/color-brilliance.jpg', link: 'https://youtube.com/shorts/DfqVKFOQsfA' },
-  { nicho: 'Beleza',       titulo: 'Óleo Seve Natura',             titulo_en: 'Natura Sève Body Oil',          capa: 'capas/seve-natura.jpg', link: 'https://youtube.com/shorts/7455cq1YNYs' },
-  { nicho: 'Beleza',       titulo: 'Sebastian Penetraitt',                                                     capa: 'capas/sebastian-penetraitt.jpg', link: 'https://youtube.com/shorts/3IBu04R6HLQ' },
-  { nicho: 'Casa e Pets',  titulo: 'Cif Detergente e Cif Cremoso', titulo_en: 'Cif Dish Soap & Cif Cream Cleaner', capa: 'capas/cif.jpg', link: 'https://youtube.com/shorts/ULW1LS_bN0g' },
-  { nicho: 'Casa e Pets',  titulo: 'Omo Ciclo Rápido',             titulo_en: 'Omo Quick Cycle',               capa: 'capas/omo-ciclo-rapido.jpg', link: 'https://youtube.com/shorts/Jkq9UDnrVCY' },
-  { nicho: 'Tech',         titulo: 'JBL GO5',                                                                  capa: 'capas/jbl-go5.jpg', link: 'https://youtu.be/pcP8dojiVCM' }
+  { nicho: 'Beleza',      titulo: 'Cicaplast',                                                                    formato: 'Problema e solução', formato_en: 'Problem & solution', capa: 'capas/cicaplast.jpg', link: 'https://youtube.com/shorts/Z9V8CuWF4AY' },
+  { nicho: 'Beleza',      titulo: 'Nivea Luminous',                                                               formato: 'Depoimento',         formato_en: 'Testimonial',        capa: 'capas/nivea-luminous.jpg', link: 'https://youtube.com/shorts/bd_HpAMYnR8' },
+  { nicho: 'Beleza',      titulo: 'Color Brilliance',                                                             formato: 'Rotina',             formato_en: 'Routine',            capa: 'capas/color-brilliance.jpg', link: 'https://youtube.com/shorts/DfqVKFOQsfA' },
+  { nicho: 'Beleza',      titulo: 'Óleo Sève Natura',             titulo_en: 'Natura Sève Body Oil',              formato: 'Storytelling',       formato_en: 'Storytelling',       capa: 'capas/seve-natura.jpg', link: 'https://youtube.com/shorts/7455cq1YNYs' },
+  { nicho: 'Beleza',      titulo: 'Sebastian Penetraitt',                                                         formato: 'Tutorial',           formato_en: 'Tutorial',           capa: 'capas/sebastian-penetraitt.jpg', link: 'https://youtube.com/shorts/3IBu04R6HLQ' },
+  { nicho: 'Casa e Pets', titulo: 'Cif Detergente e Cif Cremoso', titulo_en: 'Cif Dish Soap & Cif Cream Cleaner', formato: 'Demonstração',       formato_en: 'Demonstration',      capa: 'capas/cif.jpg', link: 'https://youtube.com/shorts/ULW1LS_bN0g' },
+  { nicho: 'Casa e Pets', titulo: 'Omo Ciclo Rápido',             titulo_en: 'Omo Quick Cycle',                   formato: 'Lifestyle',          formato_en: 'Lifestyle',          capa: 'capas/omo-ciclo-rapido.jpg', link: 'https://youtube.com/shorts/Jkq9UDnrVCY' },
+  { nicho: 'Tech',        titulo: 'JBL GO5',                                                                      formato: 'Storytelling',       formato_en: 'Storytelling',       capa: 'capas/jbl-go5.jpg', link: 'https://youtu.be/pcP8dojiVCM' }
 ];
 
 // Seis serviços (o número é gerado automaticamente pela ordem).
@@ -731,7 +731,7 @@ const TEXTOS_EN = {
 // Textos que o script monta na hora, nos dois idiomas.
 const FRASES = {
   pt: {
-    todos: 'Todos', assistir: 'Assistir Vídeo', abrirMenu: 'Abrir menu', fecharMenu: 'Fechar menu',
+    todos: 'Todos', abrirMenu: 'Abrir menu', fecharMenu: 'Fechar menu',
     assistirVideo: (t) => `Assistir ao vídeo ${t}`,
     assistirDestaque: (t, n, r) => `Assistir: ${t}, ${n} ${r}`,
     capaVideo: 'capa do vídeo 9:16', capaDe: (t) => `Capa do vídeo ${t}`,
@@ -741,7 +741,7 @@ const FRASES = {
     okCaptura: (n) => `<strong>Combinado, ${n}!</strong>O mídia kit vai chegar no seu e-mail.`
   },
   en: {
-    todos: 'All', assistir: 'Watch video', abrirMenu: 'Open menu', fecharMenu: 'Close menu',
+    todos: 'All', abrirMenu: 'Open menu', fecharMenu: 'Close menu',
     assistirVideo: (t) => `Watch the video ${t}`,
     assistirDestaque: (t, n, r) => `Watch: ${t}, ${n} ${r}`,
     capaVideo: 'video cover 9:16', capaDe: (t) => `Video cover: ${t}`,
@@ -848,7 +848,7 @@ function renderizar() {
         <div class="provisorio ${cores[i % 6]}">
           ${capa ? `<img src="${esc(capa)}" alt="" loading="lazy" onerror="this.remove()" onload="if(this.naturalWidth<=120)this.remove()">` : ''}
           <span class="etiqueta">${esc(nomeNicho(t.nicho))}</span><span class="play" aria-hidden="true"></span></div>
-        <figcaption><h3>${esc(titulo)}</h3><p class="assistir">${esc(f().assistir)} <span aria-hidden="true">→</span></p></figcaption>
+        <figcaption><h3>${esc(titulo)}</h3><p class="formato">${esc(tr(t, 'formato'))}</p></figcaption>
       </a>
     </figure>`;
   }).join('');

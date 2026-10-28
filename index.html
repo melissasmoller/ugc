@@ -286,19 +286,9 @@ p{margin:0 0 1em}
 .captura h2{font-size:clamp(1.9rem,6vw,2.4rem);margin:8px 0 12px;padding-right:30px}
 .captura .btn{width:100%}
 
-/* ================= PLAYER DE VÍDEO ================= */
-.video-fundo{position:fixed;inset:0;z-index:320;background:rgba(42,32,27,.92);display:none;align-items:center;justify-content:center;padding:16px}
-.video-fundo.aberto{display:flex}
-.video-caixa{position:relative;height:min(88vh,860px);aspect-ratio:9/16;max-width:100%;animation:aparecer .3s ease}
-.video-tela{width:100%;height:100%;background:#000}
-.video-tela iframe{width:100%;height:100%;border:0;display:block}
-.video-fechar{position:absolute;top:-6px;right:-52px;width:44px;height:44px;background:none;border:1px solid rgba(255,255,255,.6);border-radius:50%;color:#fff;font-size:1.6rem;line-height:1;cursor:pointer}
-.video-fechar:hover{background:rgba(255,255,255,.12)}
-.video-fechar:focus-visible{outline-color:#fff}
-@media (max-width:600px){
-  .video-caixa{height:auto;width:100%;max-height:calc(100vh - 90px)}
-  .video-fechar{top:-54px;right:0}
-}
+/* ================= VÍDEO TOCANDO NO PRÓPRIO CARD ================= */
+.provisorio .player{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3;background:#000}
+.tocando .play,.tocando .etiqueta{display:none}
 
 /* ================= ANIMAÇÃO AO ROLAR ================= */
 .js .revelar{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
@@ -518,14 +508,6 @@ p{margin:0 0 1em}
   </div>
 </footer>
 
-<!-- ================= PLAYER DE VÍDEO (os vídeos tocam aqui, sem sair do portfólio) ================= -->
-<div class="video-fundo" id="video-fundo">
-  <div class="video-caixa" role="dialog" aria-modal="true" aria-label="Vídeo" id="video-caixa">
-    <button class="video-fechar" type="button" id="video-fechar" aria-label="Fechar vídeo" data-i18n-aria="fecharVideo">×</button>
-    <div class="video-tela" id="video-tela"></div>
-  </div>
-</div>
-
 <!-- ================= CARD DE CAPTURA (aparece após 7 segundos, uma vez por visita) ================= -->
 <div class="captura-fundo" id="captura-fundo">
   <div class="captura" role="dialog" aria-modal="true" aria-labelledby="captura-titulo">
@@ -724,8 +706,7 @@ const TEXTOS_EN = {
   capturaTitulo: 'Want my full media kit?',
   capturaTexto: 'Leave your name and email and I’ll send you my media kit with formats, rates and case studies.',
   nome: 'Name', email: 'Email',
-  queroReceber: 'Send it to me',
-  fecharVideo: 'Close video'
+  queroReceber: 'Send it to me'
 };
 
 // Textos que o script monta na hora, nos dois idiomas.
@@ -949,6 +930,7 @@ function mudarIdioma(novo) {
   if (novo === idioma) return;
   idioma = novo;
   try { localStorage.setItem('idioma', novo); } catch (e) {}
+  pararVideo();
   aplicarTextosFixos();
   renderizar();
   observar(true);
@@ -989,8 +971,6 @@ enviar($('#form-captura'), $('#captura-ok'), (nome) => f().okCaptura(nome));
 const fundo = $('#captura-fundo');
 let focoAnterior = null;
 function abrirCaptura() {
-  // se a pessoa estiver assistindo a um vídeo, o card espera o vídeo fechar
-  if (videoFundo.classList.contains('aberto')) { setTimeout(abrirCaptura, 3000); return; }
   focoAnterior = document.activeElement;
   fundo.classList.add('aberto');
   document.body.style.overflow = 'hidden';
@@ -1008,47 +988,43 @@ if (!jaVisto) setTimeout(abrirCaptura, 7000);
 $('#captura-fechar').addEventListener('click', fecharCaptura);
 fundo.addEventListener('click', (e) => { if (e.target === fundo) fecharCaptura(); });
 
-// Player de vídeo: os vídeos do YouTube tocam numa janela dentro do portfólio, sem levar a pessoa para o YouTube
-const videoFundo = $('#video-fundo');
-let focoAntesDoVideo = null;
-function abrirVideo(id, titulo) {
-  focoAntesDoVideo = document.activeElement;
-  // youtube-nocookie: o player não grava cookies de rastreamento antes de a pessoa dar play
-  $('#video-tela').innerHTML = `<iframe src="https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0&playsinline=1&modestbranding=1"
-    title="${esc(titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`;
-  $('#video-caixa').setAttribute('aria-label', titulo);
-  videoFundo.classList.add('aberto');
-  document.body.style.overflow = 'hidden';
-  $('#video-fechar').focus();
+// Vídeos: tocam no próprio card, no lugar da capa, sem abrir janela e sem levar a pessoa para o YouTube.
+// Só um toca por vez; ao clicar em outro, ou quando o card sai da tela, o anterior para e a capa volta.
+let tocando = null;
+const obsTela = 'IntersectionObserver' in window && new IntersectionObserver((entradas) => {
+  entradas.forEach((en) => { if (!en.isIntersecting && tocando && en.target === tocando.caixa) pararVideo(); });
+}, { threshold: 0.2 });
+function pararVideo() {
+  if (!tocando) return;
+  tocando.caixa.innerHTML = tocando.capa; // tirar o player é o que faz o vídeo parar de tocar
+  tocando.link.classList.remove('tocando');
+  if (obsTela) obsTela.unobserve(tocando.caixa);
+  tocando = null;
 }
-function fecharVideo() {
-  $('#video-tela').innerHTML = ''; // tirar o player é o que faz o vídeo parar de tocar
-  videoFundo.classList.remove('aberto');
-  document.body.style.overflow = '';
-  if (focoAntesDoVideo && focoAntesDoVideo.focus) focoAntesDoVideo.focus();
+function tocarVideo(link) {
+  const caixa = link.querySelector('.provisorio');
+  if (!caixa) return;
+  pararVideo();
+  tocando = { link, caixa, capa: caixa.innerHTML };
+  link.classList.add('tocando');
+  const titulo = link.querySelector('h3') ? link.querySelector('h3').textContent : '';
+  // youtube-nocookie: o player não grava cookies de rastreamento antes de a pessoa dar play
+  caixa.insertAdjacentHTML('beforeend', `<iframe class="player" src="https://www.youtube-nocookie.com/embed/${link.dataset.video}?autoplay=1&rel=0&playsinline=1&modestbranding=1"
+    title="${esc(titulo)}" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`);
+  if (obsTela) obsTela.observe(caixa);
 }
 document.addEventListener('click', (e) => {
-  const card = e.target.closest('a[data-video]');
-  if (!card) return;
+  const link = e.target.closest('a[data-video]');
+  if (!link) return;
   e.preventDefault();
-  abrirVideo(card.dataset.video, card.querySelector('h3') ? card.querySelector('h3').textContent : '');
+  if (!link.classList.contains('tocando')) tocarVideo(link);
 });
-$('#video-fechar').addEventListener('click', fecharVideo);
-videoFundo.addEventListener('click', (e) => { if (e.target === videoFundo) fecharVideo(); });
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
-    if (videoFundo.classList.contains('aberto')) fecharVideo();
-    else if (fundo.classList.contains('aberto')) fecharCaptura();
+    if (fundo.classList.contains('aberto')) fecharCaptura();
     else if (links.classList.contains('aberto')) { fecharMenu(); hamburguer.focus(); }
-  }
-  // com o vídeo aberto, o Tab fica no botão de fechar e no player
-  if (e.key === 'Tab' && videoFundo.classList.contains('aberto')) {
-    const focaveis = [$('#video-fechar'), $('#video-tela iframe')].filter(Boolean);
-    const i = focaveis.indexOf(document.activeElement);
-    e.preventDefault();
-    focaveis[(i + (e.shiftKey ? -1 : 1) + focaveis.length) % focaveis.length].focus();
-    return;
+    else pararVideo();
   }
   // mantém o foco do teclado dentro do card enquanto ele está aberto
   if (e.key === 'Tab' && fundo.classList.contains('aberto')) {

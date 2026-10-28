@@ -191,7 +191,7 @@ p{margin:0 0 1em}
 .trabalho .provisorio{aspect-ratio:9/16;border:1px solid var(--tinta)}
 .trabalho .provisorio img{position:absolute;inset:0;transition:transform .4s}
 .trabalho a:hover img{transform:scale(1.04)}
-.trabalho .play{position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:50%;background:var(--terracota);display:grid;place-items:center;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.trabalho .play{position:absolute;inset:0;margin:auto;width:56px;height:56px;border-radius:50%;background:rgba(128,74,50,.45);border:1px solid rgba(255,255,255,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);display:grid;place-items:center}
 .trabalho .play::before{content:"";margin-left:4px;border-left:16px solid #fff;border-top:10px solid transparent;border-bottom:10px solid transparent}
 .trabalho .etiqueta{position:absolute;top:10px;left:10px;background:var(--branco);color:var(--tinta);font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;font-weight:600;padding:4px 8px;border:1px solid var(--tinta)}
 .trabalho h3{font-size:1.15rem;margin-top:12px}
@@ -289,6 +289,26 @@ p{margin:0 0 1em}
 /* ================= VÍDEO TOCANDO NO PRÓPRIO CARD ================= */
 .provisorio .player{position:absolute;inset:0;width:100%;height:100%;border:0;z-index:3;background:#000}
 .tocando .play,.tocando .etiqueta{display:none}
+/* player próprio: play/pause no meio, embaixo só a barrinha, o volume e a tela cheia */
+.player-caixa{position:absolute;inset:0;z-index:3;background:#000;cursor:pointer;overflow:hidden}
+.player-caixa video{width:100%;height:100%;object-fit:cover;display:block}
+.player-caixa button{background:none;border:0;padding:0;color:#fff;cursor:pointer;display:grid;place-items:center}
+.player-caixa svg{display:block;fill:currentColor}
+.pp{position:absolute;inset:0;margin:auto;width:58px;height:58px;border-radius:50%;background:rgba(128,74,50,.45)!important;border:1px solid rgba(255,255,255,.35)!important;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+.controles{position:absolute;left:0;right:0;bottom:0;display:flex;align-items:center;gap:12px;padding:30px 12px 12px;background:linear-gradient(transparent,rgba(0,0,0,.45))}
+.progresso{position:relative;flex:1;height:20px;cursor:pointer;touch-action:none}
+.progresso::before,.progresso .cheio{content:"";position:absolute;left:0;top:50%;height:4px;margin-top:-2px;border-radius:4px}
+.progresso::before{right:0;background:rgba(255,255,255,.35)}
+.progresso .cheio{width:0;background:#fff}
+.progresso .bolinha{position:absolute;top:50%;left:0;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;background:#fff;box-shadow:0 1px 4px rgba(0,0,0,.3)}
+.controles button{width:28px;height:28px;flex:none}
+/* os controles aparecem com o mouse em cima, com o vídeo pausado ou, no celular, logo depois de um toque */
+.pp,.controles{opacity:0;transition:opacity .25s}
+.player-caixa.pausado .pp,.player-caixa.pausado .controles,.player-caixa.mostrar .pp,.player-caixa.mostrar .controles{opacity:1}
+@media (hover:hover){.player-caixa:hover .pp,.player-caixa:hover .controles{opacity:1}}
+.player-caixa:fullscreen video{object-fit:contain}
+.player-caixa:-webkit-full-screen video{object-fit:contain}
+.player-caixa :focus-visible{outline:2px solid #fff;outline-offset:2px}
 
 /* ================= ANIMAÇÃO AO ROLAR ================= */
 .js .revelar{opacity:0;transform:translateY(28px);transition:opacity .7s ease,transform .7s ease}
@@ -720,7 +740,8 @@ const FRASES = {
     avisoFiltro: (n, nicho) => `${n} trabalhos em ${nicho}`,
     quaseLa: 'Quase lá', confira: (c) => `Confira o campo "${c}".`,
     okContato: (n) => `<strong>Recebi, ${n}!</strong>Obrigada pela mensagem. Vou responder no e-mail que você deixou.`,
-    okCaptura: (n) => `<strong>Combinado, ${n}!</strong>O mídia kit vai chegar no seu e-mail.`
+    okCaptura: (n) => `<strong>Combinado, ${n}!</strong>O mídia kit vai chegar no seu e-mail.`,
+    tocar: 'Tocar', pausar: 'Pausar', tirarSom: 'Tirar o som', porSom: 'Ativar o som', telaCheia: 'Tela cheia', posicao: 'Posição do vídeo'
   },
   en: {
     todos: 'All', abrirMenu: 'Open menu', fecharMenu: 'Close menu',
@@ -730,7 +751,8 @@ const FRASES = {
     avisoFiltro: (n, nicho) => `${n} pieces in ${nicho}`,
     quaseLa: 'Almost there', confira: (c) => `Please check the "${c}" field.`,
     okContato: (n) => `<strong>Got it, ${n}!</strong>Thanks for your message. I’ll reply to the email you left.`,
-    okCaptura: (n) => `<strong>Deal, ${n}!</strong>The media kit is on its way to your inbox.`
+    okCaptura: (n) => `<strong>Deal, ${n}!</strong>The media kit is on its way to your inbox.`,
+    tocar: 'Play', pausar: 'Pause', tirarSom: 'Mute', porSom: 'Unmute', telaCheia: 'Full screen', posicao: 'Video position'
   }
 };
 
@@ -993,6 +1015,8 @@ fundo.addEventListener('click', (e) => { if (e.target === fundo) fecharCaptura()
 // Só um toca por vez; ao clicar em outro, ou quando o card sai da tela, o anterior para e a capa volta.
 let tocando = null;
 const obsTela = 'IntersectionObserver' in window && new IntersectionObserver((entradas) => {
+  // em tela cheia o card some da página, mas o vídeo não deve parar
+  if (document.fullscreenElement || document.webkitFullscreenElement) return;
   entradas.forEach((en) => { if (!en.isIntersecting && tocando && en.target === tocando.caixa) pararVideo(); });
 }, { threshold: 0.2 });
 function pararVideo() {
@@ -1010,9 +1034,8 @@ function tocarVideo(link) {
   link.classList.add('tocando');
   const titulo = link.querySelector('h3') ? link.querySelector('h3').textContent : '';
   if (link.dataset.arquivo) {
-    // vídeo guardado no próprio site: player limpo, sem marca do YouTube
-    caixa.insertAdjacentHTML('beforeend', `<video class="player" src="${esc(link.dataset.arquivo)}" poster="${esc(link.dataset.capa || '')}"
-      controls autoplay playsinline preload="auto" aria-label="${esc(titulo)}"></video>`);
+    // vídeo guardado no próprio site: player limpo, com controles próprios
+    montarPlayer(caixa, link.dataset.arquivo, link.dataset.capa || '', titulo);
   } else {
     // vídeo do YouTube (para quando um vídeo novo ainda não foi baixado para a pasta "videos")
     caixa.insertAdjacentHTML('beforeend', `<iframe class="player" src="https://www.youtube-nocookie.com/embed/${link.dataset.video}?autoplay=1&rel=0&playsinline=1&modestbranding=1"
@@ -1026,6 +1049,80 @@ document.addEventListener('click', (e) => {
   e.preventDefault();
   if (!link.classList.contains('tocando')) tocarVideo(link);
 });
+
+// Player próprio: botão de play/pause no meio e, embaixo, a barrinha de progresso, o volume e a tela cheia.
+// No computador os controles aparecem com o mouse em cima; no celular, um toque mostra por 2,5 segundos.
+const ICONES = {
+  play: '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5.5v13l11-6.5z"/></svg>',
+  pause: '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z"/></svg>',
+  som: '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15 8.5a5 5 0 0 1 0 7M17.5 6a8.5 8.5 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  mudo: '<svg viewBox="0 0 24 24" width="22" height="22"><path d="M4 9.5h3.5L12 5.5v13l-4.5-4H4z"/><path d="M15.5 9.5l5 5m0-5l-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>',
+  telaCheia: '<svg viewBox="0 0 24 24" width="20" height="20"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
+};
+const tocaComToque = window.matchMedia('(hover: none)').matches;
+function montarPlayer(caixa, src, capa, titulo) {
+  caixa.insertAdjacentHTML('beforeend', `<div class="player-caixa pausado" role="group" aria-label="${esc(titulo)}">
+    <video src="${esc(src)}" poster="${esc(capa)}" autoplay playsinline preload="auto"></video>
+    <button type="button" class="pp" aria-label="${esc(f().tocar)}">${ICONES.play}</button>
+    <div class="controles">
+      <div class="progresso" role="slider" tabindex="0" aria-label="${esc(f().posicao)}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><div class="cheio"></div><div class="bolinha"></div></div>
+      <button type="button" class="som" aria-label="${esc(f().tirarSom)}">${ICONES.som}</button>
+      <button type="button" class="tela" aria-label="${esc(f().telaCheia)}">${ICONES.telaCheia}</button>
+    </div>
+  </div>`);
+  const p = caixa.querySelector('.player-caixa'), v = p.querySelector('video');
+  const pp = p.querySelector('.pp'), barra = p.querySelector('.progresso'), som = p.querySelector('.som');
+  let esconder = null, arrastando = false;
+
+  const mostrarUmPouco = () => {
+    p.classList.add('mostrar');
+    clearTimeout(esconder);
+    esconder = setTimeout(() => p.classList.remove('mostrar'), 2500);
+  };
+  const alternar = () => (v.paused || v.ended ? v.play() : v.pause());
+  const atualizarBarra = () => {
+    const pct = v.duration ? (v.currentTime / v.duration) * 100 : 0;
+    barra.querySelector('.cheio').style.width = pct + '%';
+    barra.querySelector('.bolinha').style.left = pct + '%';
+    barra.setAttribute('aria-valuenow', Math.round(pct));
+  };
+  const irPara = (x) => {
+    const r = barra.getBoundingClientRect();
+    if (v.duration) v.currentTime = Math.min(Math.max((x - r.left) / r.width, 0), 1) * v.duration;
+    atualizarBarra();
+  };
+
+  v.addEventListener('play', () => { p.classList.remove('pausado'); pp.innerHTML = ICONES.pause; pp.setAttribute('aria-label', f().pausar); });
+  v.addEventListener('pause', () => { p.classList.add('pausado'); pp.innerHTML = ICONES.play; pp.setAttribute('aria-label', f().tocar); });
+  v.addEventListener('timeupdate', () => { if (!arrastando) atualizarBarra(); });
+  v.addEventListener('volumechange', () => {
+    som.innerHTML = v.muted ? ICONES.mudo : ICONES.som;
+    som.setAttribute('aria-label', v.muted ? f().porSom : f().tirarSom);
+  });
+
+  // clique na área do vídeo: no computador pausa/toca; no celular o primeiro toque só mostra os controles
+  p.addEventListener('click', (e) => {
+    if (e.target.closest('.controles')) return;
+    if (e.target.closest('.pp')) { alternar(); mostrarUmPouco(); return; }
+    if (tocaComToque && !p.classList.contains('mostrar') && !v.paused) { mostrarUmPouco(); return; }
+    alternar();
+    if (tocaComToque) mostrarUmPouco();
+  });
+  som.addEventListener('click', () => { v.muted = !v.muted; mostrarUmPouco(); });
+  p.querySelector('.tela').addEventListener('click', () => {
+    if (p.requestFullscreen) p.requestFullscreen();
+    else if (p.webkitRequestFullscreen) p.webkitRequestFullscreen();
+    else if (v.webkitEnterFullscreen) v.webkitEnterFullscreen(); // iPhone só deixa o próprio vídeo ir para tela cheia
+  });
+  barra.addEventListener('pointerdown', (e) => { arrastando = true; barra.setPointerCapture(e.pointerId); irPara(e.clientX); mostrarUmPouco(); });
+  barra.addEventListener('pointermove', (e) => { if (arrastando) irPara(e.clientX); });
+  barra.addEventListener('pointerup', () => { arrastando = false; });
+  barra.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight') { v.currentTime = Math.min(v.currentTime + 5, v.duration || 0); e.preventDefault(); }
+    if (e.key === 'ArrowLeft') { v.currentTime = Math.max(v.currentTime - 5, 0); e.preventDefault(); }
+  });
+  if (tocaComToque) mostrarUmPouco();
+}
 
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {

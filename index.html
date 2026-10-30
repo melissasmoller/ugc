@@ -209,6 +209,30 @@ p{margin:0 0 1em}
 .galeria-grade .foto:hover img{transform:scale(1.04)}
 @media (max-width:1000px){.galeria-grade{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:700px){.galeria-grade{grid-template-columns:repeat(2,1fr)}}
+/* ================= DINO & PANDA EM CENA ================= */
+.pets-sub{max-width:52ch;margin:-12px 0 clamp(32px,4vw,48px);color:var(--cinza)}
+.pets-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(36px,4vw,56px) clamp(24px,3vw,44px);padding:14px 0 0 14px}
+.pet-card{position:relative;display:block;width:100%;padding:0;margin:0;border:0;background:none;cursor:zoom-in;aspect-ratio:4/5}
+.pet-frente,.pet-atras{position:absolute;inset:0;border:1px solid var(--tinta);background:var(--papel-2);overflow:hidden;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
+/* a foto entra inteira (sem cortar); se não for 4:5, sobra uma margem suave da cor do fundo */
+.pet-frente img,.pet-atras img{width:100%;height:100%;object-fit:contain}
+.pet-frente{z-index:2}
+.pet-atras-1{transform:rotate(-4deg)}
+.pet-atras-2{transform:rotate(3.5deg)}
+@media (hover:hover){
+  .pilha:hover .pet-atras-1{transform:rotate(-11deg) translate(-16%,2%)}
+  .pilha:hover .pet-atras-2{transform:rotate(10deg) translate(16%,2%)}
+  .pilha:hover .pet-frente{transform:translateY(-3%)}
+  .pet-card:not(.pilha):hover .pet-frente img{transform:scale(1.03)}
+  .pet-frente img{transition:transform .4s}
+}
+/* selo da marca: metade dentro, metade para fora, no canto superior esquerdo */
+.pet-selo{position:absolute;z-index:3;top:-14px;left:-14px;width:clamp(78px,32%,118px);height:auto;border-radius:10px;border:2px solid #fff;box-shadow:0 4px 14px rgba(42,32,27,.22);transform:rotate(-4deg);transition:transform .3s}
+.pet-card:hover .pet-selo{transform:rotate(0deg) scale(1.05)}
+.pet-selo-texto{width:auto;padding:6px 12px;background:var(--branco);color:var(--tinta);font-size:.78rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase}
+.pet-qtd{position:absolute;z-index:3;right:10px;bottom:10px;background:rgba(128,74,50,.55);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:999px}
+@media (max-width:860px){.pets-grade{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:480px){.pets-grade{grid-template-columns:1fr;max-width:340px;margin:0 auto}}
 .foto-ampliada{position:fixed;inset:0;z-index:320;background:rgba(42,32,27,.94);display:none;align-items:center;justify-content:center;padding:56px 16px}
 .foto-ampliada.aberto{display:flex}
 .foto-ampliada img{max-width:100%;max-height:100%;object-fit:contain;animation:aparecer .3s ease}
@@ -472,6 +496,19 @@ p{margin:0 0 1em}
 
 <hr class="filete">
 
+<!-- ================= DINO & PANDA EM CENA (fotos dos pets por marca) ================= -->
+<section class="secao" id="pets" aria-labelledby="titulo-pets">
+  <div class="recipiente">
+    <p class="cartola revelar" data-i18n="cartolaPets">Pets</p>
+    <h2 class="titulo-secao revelar" id="titulo-pets" data-i18n="tituloPets">Dino &amp; Panda <em>em cena</em></h2>
+    <p class="pets-sub revelar" data-i18n="subPets">Conteúdo para marcas pet, com quem entende do assunto.</p>
+    <!-- Os cards vêm do array PETS no script -->
+    <div class="pets-grade" id="pets-grade"></div>
+  </div>
+</section>
+
+<hr class="filete">
+
 <!-- ================= 5. COMO EU TE AJUDO ================= -->
 <section class="secao" id="servicos" aria-labelledby="titulo-servicos">
   <div class="recipiente">
@@ -660,6 +697,15 @@ const GALERIA = [
   { foto: 'galeria/foto-01.jpg', descricao: 'Melissa Möller sorrindo com dois Stick Pele Boca Rosa nas mãos', descricao_en: 'Melissa Möller smiling while holding two Boca Rosa Skin Sticks' }
 ];
 
+// Dino & Panda em cena: um card por marca, na moldura do Instagram (4:5), sem cortar a foto.
+//  logo: selo da marca no canto. capa: número da foto que aparece no card (0 = primeira).
+//  Com mais de uma foto, o card vira uma pilha que abre em leque ao passar o mouse e, ao clicar, um carrossel.
+const PETS = [
+  { marca: 'Beeps', logo: 'logos/beeps-selo.png', capa: 0, fotos: [
+    { foto: 'pets/beeps-01.jpg', descricao: 'Dino e Panda, dois yorkshires, sentados numa toalha Beeps com os produtos da marca ao lado', descricao_en: 'Dino and Panda, two Yorkshire terriers, sitting on a Beeps towel next to the brand’s products' }
+  ] }
+];
+
 // Seis serviços (o número é gerado automaticamente pela ordem).
 const SERVICOS = [
   { titulo: 'Vídeo UGC', titulo_en: 'UGC video',
@@ -756,6 +802,9 @@ const TEXTOS_EN = {
   tituloTrabalhos: 'Work by <em>niche</em>',
   filtrar: 'Filter work by niche',
   fotoAmpliada: 'Photo', fotoAnterior: 'Previous photo', proximaFoto: 'Next photo',
+  cartolaPets: 'Pets',
+  tituloPets: 'Dino &amp; Panda <em>on set</em>',
+  subPets: 'Pet content for brands, made by the ones who know it best.',
   cartolaGaleria: 'Photos',
   tituloGaleria: 'Photo <em>gallery</em>',
   cartolaServicos: 'Services',
@@ -789,7 +838,8 @@ const FRASES = {
     quaseLa: 'Quase lá', confira: (c) => `Confira o campo "${c}".`,
     okContato: (n) => `<strong>Recebi, ${n}!</strong>Obrigada pela mensagem. Vou responder no e-mail que você deixou.`,
     okCaptura: (n) => `<strong>Combinado, ${n}!</strong>O mídia kit vai chegar no seu e-mail.`,
-    ampliarFoto: 'Ver foto ampliada', tocar: 'Tocar', pausar: 'Pausar', tirarSom: 'Tirar o som', porSom: 'Ativar o som', telaCheia: 'Tela cheia', posicao: 'Posição do vídeo'
+    ampliarFoto: 'Ver foto ampliada', fotos: 'fotos',
+    verFotosMarca: (m, n) => n > 1 ? `Ver as ${n} fotos para ${m}` : `Ver foto para ${m}`, tocar: 'Tocar', pausar: 'Pausar', tirarSom: 'Tirar o som', porSom: 'Ativar o som', telaCheia: 'Tela cheia', posicao: 'Posição do vídeo'
   },
   en: {
     todos: 'All', abrirMenu: 'Open menu', fecharMenu: 'Close menu',
@@ -800,7 +850,8 @@ const FRASES = {
     quaseLa: 'Almost there', confira: (c) => `Please check the "${c}" field.`,
     okContato: (n) => `<strong>Got it, ${n}!</strong>Thanks for your message. I’ll reply to the email you left.`,
     okCaptura: (n) => `<strong>Deal, ${n}!</strong>The media kit is on its way to your inbox.`,
-    ampliarFoto: 'View larger photo', tocar: 'Play', pausar: 'Pause', tirarSom: 'Mute', porSom: 'Unmute', telaCheia: 'Full screen', posicao: 'Video position'
+    ampliarFoto: 'View larger photo', fotos: 'photos',
+    verFotosMarca: (m, n) => n > 1 ? `See the ${n} photos for ${m}` : `See photo for ${m}`, tocar: 'Play', pausar: 'Pause', tirarSom: 'Mute', porSom: 'Unmute', telaCheia: 'Full screen', posicao: 'Video position'
   }
 };
 
@@ -909,6 +960,18 @@ function renderizar() {
   $('#galeria-grade').innerHTML = GALERIA.map((g, i) =>
     `<button type="button" class="foto" data-i="${i}" aria-label="${esc(f().ampliarFoto)}">
       <img src="${esc(g.foto)}" alt="${esc(tr(g, 'descricao'))}" loading="lazy"></button>`).join('');
+
+  $('#pets-grade').innerHTML = PETS.map((p, i) => {
+    const capa = p.fotos[p.capa || 0] || p.fotos[0];
+    const atras = p.fotos.filter((x) => x !== capa).slice(0, 2);
+    return `<button type="button" class="pet-card${p.fotos.length > 1 ? ' pilha' : ''}" data-pet="${i}"
+      aria-label="${esc(f().verFotosMarca(p.marca, p.fotos.length))}">
+      ${atras.map((x, k) => `<span class="pet-atras pet-atras-${k + 1}" aria-hidden="true"><img src="${esc(x.foto)}" alt="" loading="lazy"></span>`).join('')}
+      <span class="pet-frente"><img src="${esc(capa.foto)}" alt="${esc(tr(capa, 'descricao'))}" loading="lazy"></span>
+      ${p.logo ? `<img class="pet-selo" src="${esc(p.logo)}" alt="${esc(p.marca)}">` : `<span class="pet-selo pet-selo-texto">${esc(p.marca)}</span>`}
+      ${p.fotos.length > 1 ? `<span class="pet-qtd" aria-hidden="true">${p.fotos.length} ${esc(f().fotos)}</span>` : ''}
+    </button>`;
+  }).join('');
 
   $('#servicos-grade').innerHTML = SERVICOS.map((s, i) =>
     `<article class="servico revelar"><div class="num">${String(i + 1).padStart(2, '0')}</div>
@@ -1176,17 +1239,18 @@ function montarPlayer(caixa, src, capa, titulo) {
   if (tocaComToque) mostrarUmPouco();
 }
 
-// Galeria: clicar numa foto abre ela grande; setas passam para a próxima e Esc fecha
+// Fotos ampliadas (galeria e pets): clicar abre grande; setas, arrastar no celular ou teclado passam; Esc fecha
 const ampliada = $('#foto-ampliada');
-let fotoAtual = 0, focoAntesDaFoto = null;
+let fotoAtual = 0, focoAntesDaFoto = null, listaFotos = GALERIA;
 function mostrarFoto(i) {
-  fotoAtual = (i + GALERIA.length) % GALERIA.length;
-  const g = GALERIA[fotoAtual];
+  fotoAtual = (i + listaFotos.length) % listaFotos.length;
+  const g = listaFotos[fotoAtual];
   ampliada.querySelector('img').src = g.foto;
   ampliada.querySelector('img').alt = tr(g, 'descricao');
-  ampliada.querySelectorAll('.foto-seta').forEach((b) => { b.hidden = GALERIA.length < 2; });
+  ampliada.querySelectorAll('.foto-seta').forEach((b) => { b.hidden = listaFotos.length < 2; });
 }
-function abrirFoto(i) {
+function abrirFoto(i, lista) {
+  listaFotos = lista || GALERIA;
   focoAntesDaFoto = document.activeElement;
   mostrarFoto(i);
   ampliada.classList.add('aberto');
@@ -1198,7 +1262,22 @@ function fecharFoto() {
   document.body.style.overflow = '';
   if (focoAntesDaFoto && focoAntesDaFoto.focus) focoAntesDaFoto.focus();
 }
-$('#galeria-grade').addEventListener('click', (e) => { const b = e.target.closest('.foto'); if (b) abrirFoto(+b.dataset.i); });
+$('#galeria-grade').addEventListener('click', (e) => { const b = e.target.closest('.foto'); if (b) abrirFoto(+b.dataset.i, GALERIA); });
+$('#pets-grade').addEventListener('click', (e) => {
+  const b = e.target.closest('.pet-card');
+  if (!b) return;
+  const p = PETS[+b.dataset.pet];
+  abrirFoto(p.capa || 0, p.fotos);
+});
+// no celular, arrastar a foto ampliada para o lado passa para a próxima
+let toqueX = null;
+ampliada.addEventListener('touchstart', (e) => { toqueX = e.touches[0].clientX; }, { passive: true });
+ampliada.addEventListener('touchend', (e) => {
+  if (toqueX === null) return;
+  const dx = e.changedTouches[0].clientX - toqueX;
+  toqueX = null;
+  if (Math.abs(dx) > 50 && listaFotos.length > 1) mostrarFoto(fotoAtual + (dx < 0 ? 1 : -1));
+});
 ampliada.addEventListener('click', (e) => {
   if (e.target.closest('.foto-fechar') || e.target === ampliada) fecharFoto();
   else if (e.target.closest('.foto-ant')) mostrarFoto(fotoAtual - 1);

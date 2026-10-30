@@ -211,17 +211,18 @@ p{margin:0 0 1em}
 @media (max-width:700px){.galeria-grade{grid-template-columns:repeat(2,1fr)}}
 /* ================= DINO & PANDA EM CENA ================= */
 .pets-sub{max-width:52ch;margin:-12px 0 clamp(32px,4vw,48px);color:var(--cinza)}
-.pets-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(36px,4vw,56px) clamp(24px,3vw,44px);padding:14px 0 0 14px}
+.pets-grade{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(48px,6vw,72px) clamp(64px,8vw,120px);padding:14px clamp(20px,3vw,40px) 0 clamp(28px,3vw,48px)}
 .pet-card{position:relative;display:block;width:100%;padding:0;margin:0;border:0;background:none;cursor:zoom-in;aspect-ratio:4/5}
 .pet-frente,.pet-atras{position:absolute;inset:0;border:1px solid var(--tinta);background:var(--papel-2);overflow:hidden;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
 /* a foto entra inteira (sem cortar); se não for 4:5, sobra uma margem suave da cor do fundo */
-.pet-frente img,.pet-atras img{width:100%;height:100%;object-fit:contain}
+.pet-frente,.pet-atras{display:flex;align-items:center}
+.pet-frente img,.pet-atras img{width:100%;height:auto;aspect-ratio:1/1;object-fit:contain}
 .pet-frente{z-index:2}
 .pet-atras-1{transform:rotate(-4deg)}
 .pet-atras-2{transform:rotate(3.5deg)}
 @media (hover:hover){
-  .pilha:hover .pet-atras-1{transform:rotate(-11deg) translate(-16%,2%)}
-  .pilha:hover .pet-atras-2{transform:rotate(10deg) translate(16%,2%)}
+  .pilha:hover .pet-atras-1{transform:rotate(-9deg) translate(-11%,2%)}
+  .pilha:hover .pet-atras-2{transform:rotate(8deg) translate(11%,2%)}
   .pilha:hover .pet-frente{transform:translateY(-3%)}
   .pet-card:not(.pilha):hover .pet-frente img{transform:scale(1.03)}
   .pet-frente img{transition:transform .4s}
@@ -702,9 +703,9 @@ const GALERIA = [
 //  Com mais de uma foto, o card vira uma pilha que abre em leque ao passar o mouse e, ao clicar, um carrossel.
 const PETS = [
   { marca: 'Beeps', logo: 'logos/beeps-selo.png', capa: 0, fotos: [
-    { foto: 'pets/beeps-02.jpg?v=2', descricao: 'Dino e Panda, dois yorkshires, posando na toalha bordada da Beeps', descricao_en: 'Dino and Panda, two Yorkshire terriers, posing on the embroidered Beeps towel' },
-    { foto: 'pets/beeps-01.jpg?v=2', descricao: 'Dino e Panda olhando para a câmera, com os produtos Beeps ao lado', descricao_en: 'Dino and Panda looking at the camera, with Beeps products beside them' },
-    { foto: 'pets/beeps-03.jpg?v=2', descricao: 'Kit Beeps com shampoos, condicionador e sprays numa caixa com a toalha da marca', descricao_en: 'Beeps kit with shampoos, conditioner and sprays in a box with the brand’s towel' }
+    { foto: 'pets/beeps-02.jpg?v=3', descricao: 'Dino e Panda, dois yorkshires, posando na toalha bordada da Beeps', descricao_en: 'Dino and Panda, two Yorkshire terriers, posing on the embroidered Beeps towel' },
+    { foto: 'pets/beeps-01.jpg?v=3', descricao: 'Dino e Panda olhando para a câmera, com os produtos Beeps ao lado', descricao_en: 'Dino and Panda looking at the camera, with Beeps products beside them' },
+    { foto: 'pets/beeps-03.jpg?v=3', descricao: 'Kit Beeps com shampoos, condicionador e sprays numa caixa com a toalha da marca', descricao_en: 'Beeps kit with shampoos, conditioner and sprays in a box with the brand’s towel' }
   ] },
   { marca: 'Simba Lovers Store', logo: 'logos/simba-lovers-selo.png', capa: 0, fotos: [
     { foto: 'pets/simba-01.jpg', descricao: 'Dino e Panda sorrindo na grama com camisetas azuis de estrelinhas', descricao_en: 'Dino and Panda smiling on the grass in matching blue star shirts' },

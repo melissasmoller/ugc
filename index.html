@@ -216,7 +216,8 @@ p{margin:0 0 1em}
 .pet-frente,.pet-atras{position:absolute;inset:0;border:1px solid var(--tinta);background:var(--papel-2);overflow:hidden;transition:transform .45s cubic-bezier(.2,.7,.2,1)}
 /* a foto entra inteira (sem cortar); se não for 4:5, sobra uma margem suave da cor do fundo */
 .pet-frente,.pet-atras{display:flex;align-items:center}
-.pet-frente img,.pet-atras img{width:100%;height:auto;aspect-ratio:1/1;object-fit:contain}
+/* no card todas as fotos ocupam a mesma faixa quadrada (barrinhas só em cima e embaixo); no carrossel a foto aparece inteira */
+.pet-frente img,.pet-atras img{width:100%;height:auto;aspect-ratio:1/1;object-fit:cover}
 .pet-frente{z-index:2}
 .pet-atras-1{transform:rotate(-4deg)}
 .pet-atras-2{transform:rotate(3.5deg)}
@@ -719,6 +720,12 @@ const PETS = [
     { foto: 'pets/wein-01.jpg', descricao: 'Dino e Panda num tapete colorido com moletons azul e vermelho', descricao_en: 'Dino and Panda on a colorful mat in blue and red sweatshirts' },
     { foto: 'pets/wein-02.jpg', descricao: 'Dino e Panda no sofá com moletons verdes de capuz', descricao_en: 'Dino and Panda on the sofa in green hoodies' },
     { foto: 'pets/wein-03.jpg', descricao: 'Dino e Panda sentados com moletons verde limão de capuz', descricao_en: 'Dino and Panda sitting in lime green hoodies' }
+  ] },
+  { marca: 'Pet Beauty', logo: 'logos/pet-beauty-selo.png', capa: 0, fotos: [
+    { foto: 'pets/petbeauty-01.jpg', descricao: 'Dino e Panda sorrindo com gravatinhas e laços coloridos', descricao_en: 'Dino and Panda smiling in colorful bow ties' },
+    { foto: 'pets/petbeauty-02.jpg', descricao: 'Dino e Panda no colo do Papai Noel num cenário de Natal', descricao_en: 'Dino and Panda on Santa’s lap in a Christmas setting' },
+    { foto: 'pets/petbeauty-03.jpg', descricao: 'Dino e Panda com bandanas natalinas no colo do Papai Noel, ao lado da árvore', descricao_en: 'Dino and Panda in Christmas bandanas on Santa’s lap, next to the tree' },
+    { foto: 'pets/petbeauty-04.jpg', descricao: 'Dino e Panda de bandanas verdes sentados num puff', descricao_en: 'Dino and Panda in green bandanas sitting on a pouf' }
   ] }
 ];
 

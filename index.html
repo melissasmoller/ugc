@@ -201,6 +201,23 @@ p{margin:0 0 1em}
 @keyframes aparecer{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media (max-width:1000px){.trabalhos-grade{grid-template-columns:repeat(3,1fr)}}
 @media (max-width:700px){.trabalhos-grade{grid-template-columns:repeat(2,1fr)}}
+
+/* ================= GALERIA DE FOTOS (mesma moldura vertical dos vídeos) ================= */
+.galeria-grade{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,2vw,24px)}
+.galeria-grade .foto{display:block;width:100%;padding:0;margin:0;border:1px solid var(--tinta);background:var(--papel-2);aspect-ratio:9/16;overflow:hidden;cursor:zoom-in}
+.galeria-grade .foto img{width:100%;height:100%;object-fit:cover;transition:transform .4s}
+.galeria-grade .foto:hover img{transform:scale(1.04)}
+@media (max-width:1000px){.galeria-grade{grid-template-columns:repeat(3,1fr)}}
+@media (max-width:700px){.galeria-grade{grid-template-columns:repeat(2,1fr)}}
+.foto-ampliada{position:fixed;inset:0;z-index:320;background:rgba(42,32,27,.94);display:none;align-items:center;justify-content:center;padding:56px 16px}
+.foto-ampliada.aberto{display:flex}
+.foto-ampliada img{max-width:100%;max-height:100%;object-fit:contain;animation:aparecer .3s ease}
+.foto-ampliada button{position:absolute;width:48px;height:48px;border-radius:50%;background:rgba(128,74,50,.45);border:1px solid rgba(255,255,255,.35);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:#fff;font-size:1.8rem;line-height:1;cursor:pointer;display:grid;place-items:center}
+.foto-ampliada .foto-fechar{top:12px;right:12px}
+.foto-ampliada .foto-ant{left:12px;top:50%;margin-top:-24px}
+.foto-ampliada .foto-prox{right:12px;top:50%;margin-top:-24px}
+.foto-ampliada button[hidden]{display:none}
+.foto-ampliada :focus-visible{outline-color:#fff}
 @media (max-width:400px){.trabalho h3{font-size:1rem}.trabalho .play{width:44px;height:44px}}
 
 /* ================= 5. SERVIÇOS ================= */
@@ -443,6 +460,18 @@ p{margin:0 0 1em}
 
 <hr class="filete">
 
+<!-- ================= GALERIA DE FOTOS ================= -->
+<section class="secao" id="galeria" aria-labelledby="titulo-galeria">
+  <div class="recipiente">
+    <p class="cartola revelar" data-i18n="cartolaGaleria">Fotos</p>
+    <h2 class="titulo-secao revelar" id="titulo-galeria" data-i18n="tituloGaleria">Galeria de <em>fotos</em></h2>
+    <!-- As fotos vêm do array GALERIA no script -->
+    <div class="galeria-grade" id="galeria-grade"></div>
+  </div>
+</section>
+
+<hr class="filete">
+
 <!-- ================= 5. COMO EU TE AJUDO ================= -->
 <section class="secao" id="servicos" aria-labelledby="titulo-servicos">
   <div class="recipiente">
@@ -528,6 +557,14 @@ p{margin:0 0 1em}
   </div>
 </footer>
 
+<!-- ================= FOTO AMPLIADA (abre ao clicar numa foto da galeria) ================= -->
+<div class="foto-ampliada" id="foto-ampliada" role="dialog" aria-modal="true" aria-label="Foto" data-i18n-aria="fotoAmpliada">
+  <img src="" alt="">
+  <button type="button" class="foto-fechar" aria-label="Fechar" data-i18n-aria="fechar">×</button>
+  <button type="button" class="foto-seta foto-ant" aria-label="Foto anterior" data-i18n-aria="fotoAnterior">‹</button>
+  <button type="button" class="foto-seta foto-prox" aria-label="Próxima foto" data-i18n-aria="proximaFoto">›</button>
+</div>
+
 <!-- ================= CARD DE CAPTURA (aparece após 7 segundos, uma vez por visita) ================= -->
 <div class="captura-fundo" id="captura-fundo">
   <div class="captura" role="dialog" aria-modal="true" aria-labelledby="captura-titulo">
@@ -596,7 +633,7 @@ const DESTAQUES = [
 ];
 
 // Nome de cada nicho em inglês (os botões de filtro usam isso quando o site está em inglês).
-const NICHOS_EN = { 'Beleza': 'Beauty', 'Casa e Pets': 'Home & Pets', 'Tech': 'Tech' };
+const NICHOS_EN = { 'Skincare': 'Skincare', 'Beleza': 'Beauty', 'Casa e Pets': 'Home & Pets', 'Tech': 'Tech' };
 
 // Galeria de trabalhos. Os botões de filtro são criados a partir do campo "nicho", na ordem em que aparecem.
 //  video: arquivo do vídeo na pasta "videos" (toca no site com player limpo, sem marca do YouTube).
@@ -605,6 +642,7 @@ const NICHOS_EN = { 'Beleza': 'Beauty', 'Casa e Pets': 'Home & Pets', 'Tech': 'T
 //  formato: o tipo de vídeo, que aparece embaixo do nome (formato_en é a versão em inglês).
 //  Para adicionar um vídeo, copie uma linha, troque o título e o link e mantenha a vírgula no fim.
 const TRABALHOS = [
+  { nicho: 'Skincare',    titulo: 'Stick Boca Rosa',                                                              formato: 'GRWM',               formato_en: 'GRWM',               capa: 'capas/stick-boca-rosa.jpg?v=p3', video: 'videos/stick-boca-rosa.mp4?v=hd1', link: 'https://youtu.be/JUA4iXmFRJ8' },
   { nicho: 'Beleza',      titulo: 'Cicaplast',                                                                    formato: 'Problema e solução', formato_en: 'Problem & solution', capa: 'capas/cicaplast.jpg?v=p3', video: 'videos/cicaplast.mp4?v=hd1', link: 'https://youtube.com/shorts/Z9V8CuWF4AY' },
   { nicho: 'Beleza',      titulo: 'Nivea Luminous',                                                               formato: 'Depoimento',         formato_en: 'Testimonial',        capa: 'capas/nivea-luminous.jpg?v=p3', video: 'videos/nivea-luminous.mp4?v=hd1', link: 'https://youtube.com/shorts/bd_HpAMYnR8' },
   { nicho: 'Beleza',      titulo: 'Color Brilliance',                                                             formato: 'Rotina',             formato_en: 'Routine',            capa: 'capas/color-brilliance.jpg?v=p3', video: 'videos/color-brilliance.mp4?v=hd1', link: 'https://youtube.com/shorts/DfqVKFOQsfA' },
@@ -613,6 +651,13 @@ const TRABALHOS = [
   { nicho: 'Casa e Pets', titulo: 'Cif Detergente e Cif Cremoso', titulo_en: 'Cif Dish Soap & Cif Cream Cleaner', formato: 'Antes e depois',     formato_en: 'Before & after',     capa: 'capas/cif.jpg?v=p3', video: 'videos/cif.mp4?v=hd1', link: 'https://youtube.com/shorts/ULW1LS_bN0g' },
   { nicho: 'Casa e Pets', titulo: 'Omo Ciclo Rápido',             titulo_en: 'Omo Quick Cycle',                   formato: 'Lifestyle',          formato_en: 'Lifestyle',          capa: 'capas/omo-ciclo-rapido.jpg?v=p3', video: 'videos/omo-ciclo-rapido.mp4?v=hd1', link: 'https://youtube.com/shorts/TnfrAysaQO8' },
   { nicho: 'Tech',        titulo: 'JBL GO5',                                                                      formato: 'Storytelling',       formato_en: 'Storytelling',       capa: 'capas/jbl-go5.jpg?v=p3', video: 'videos/jbl-go5.mp4?v=hd1', link: 'https://youtu.be/pcP8dojiVCM' }
+];
+
+// Galeria de fotos: sem título, mesma moldura vertical dos vídeos.
+//  Para adicionar uma foto, coloque o arquivo na pasta "galeria" e copie uma linha.
+//  descricao: texto curto para quem usa leitor de tela (não aparece na página).
+const GALERIA = [
+  { foto: 'galeria/foto-01.jpg', descricao: 'Melissa Möller sorrindo com dois Stick Pele Boca Rosa nas mãos', descricao_en: 'Melissa Möller smiling while holding two Boca Rosa Skin Sticks' }
 ];
 
 // Seis serviços (o número é gerado automaticamente pela ordem).
@@ -710,6 +755,9 @@ const TEXTOS_EN = {
   cartolaTrabalhos: 'Work',
   tituloTrabalhos: 'Work by <em>niche</em>',
   filtrar: 'Filter work by niche',
+  fotoAmpliada: 'Photo', fotoAnterior: 'Previous photo', proximaFoto: 'Next photo',
+  cartolaGaleria: 'Photos',
+  tituloGaleria: 'Photo <em>gallery</em>',
   cartolaServicos: 'Services',
   tituloServicos: 'How I <em>help you</em>',
   cartolaNumeros: 'Numbers',
@@ -741,7 +789,7 @@ const FRASES = {
     quaseLa: 'Quase lá', confira: (c) => `Confira o campo "${c}".`,
     okContato: (n) => `<strong>Recebi, ${n}!</strong>Obrigada pela mensagem. Vou responder no e-mail que você deixou.`,
     okCaptura: (n) => `<strong>Combinado, ${n}!</strong>O mídia kit vai chegar no seu e-mail.`,
-    tocar: 'Tocar', pausar: 'Pausar', tirarSom: 'Tirar o som', porSom: 'Ativar o som', telaCheia: 'Tela cheia', posicao: 'Posição do vídeo'
+    ampliarFoto: 'Ver foto ampliada', tocar: 'Tocar', pausar: 'Pausar', tirarSom: 'Tirar o som', porSom: 'Ativar o som', telaCheia: 'Tela cheia', posicao: 'Posição do vídeo'
   },
   en: {
     todos: 'All', abrirMenu: 'Open menu', fecharMenu: 'Close menu',
@@ -752,7 +800,7 @@ const FRASES = {
     quaseLa: 'Almost there', confira: (c) => `Please check the "${c}" field.`,
     okContato: (n) => `<strong>Got it, ${n}!</strong>Thanks for your message. I’ll reply to the email you left.`,
     okCaptura: (n) => `<strong>Deal, ${n}!</strong>The media kit is on its way to your inbox.`,
-    tocar: 'Play', pausar: 'Pause', tirarSom: 'Mute', porSom: 'Unmute', telaCheia: 'Full screen', posicao: 'Video position'
+    ampliarFoto: 'View larger photo', tocar: 'Play', pausar: 'Pause', tirarSom: 'Mute', porSom: 'Unmute', telaCheia: 'Full screen', posicao: 'Video position'
   }
 };
 
@@ -857,6 +905,10 @@ function renderizar() {
     </figure>`;
   }).join('');
   $('#aviso-filtro').textContent = '';
+
+  $('#galeria-grade').innerHTML = GALERIA.map((g, i) =>
+    `<button type="button" class="foto" data-i="${i}" aria-label="${esc(f().ampliarFoto)}">
+      <img src="${esc(g.foto)}" alt="${esc(tr(g, 'descricao'))}" loading="lazy"></button>`).join('');
 
   $('#servicos-grade').innerHTML = SERVICOS.map((s, i) =>
     `<article class="servico revelar"><div class="num">${String(i + 1).padStart(2, '0')}</div>
@@ -1124,7 +1176,48 @@ function montarPlayer(caixa, src, capa, titulo) {
   if (tocaComToque) mostrarUmPouco();
 }
 
+// Galeria: clicar numa foto abre ela grande; setas passam para a próxima e Esc fecha
+const ampliada = $('#foto-ampliada');
+let fotoAtual = 0, focoAntesDaFoto = null;
+function mostrarFoto(i) {
+  fotoAtual = (i + GALERIA.length) % GALERIA.length;
+  const g = GALERIA[fotoAtual];
+  ampliada.querySelector('img').src = g.foto;
+  ampliada.querySelector('img').alt = tr(g, 'descricao');
+  ampliada.querySelectorAll('.foto-seta').forEach((b) => { b.hidden = GALERIA.length < 2; });
+}
+function abrirFoto(i) {
+  focoAntesDaFoto = document.activeElement;
+  mostrarFoto(i);
+  ampliada.classList.add('aberto');
+  document.body.style.overflow = 'hidden';
+  ampliada.querySelector('.foto-fechar').focus();
+}
+function fecharFoto() {
+  ampliada.classList.remove('aberto');
+  document.body.style.overflow = '';
+  if (focoAntesDaFoto && focoAntesDaFoto.focus) focoAntesDaFoto.focus();
+}
+$('#galeria-grade').addEventListener('click', (e) => { const b = e.target.closest('.foto'); if (b) abrirFoto(+b.dataset.i); });
+ampliada.addEventListener('click', (e) => {
+  if (e.target.closest('.foto-fechar') || e.target === ampliada) fecharFoto();
+  else if (e.target.closest('.foto-ant')) mostrarFoto(fotoAtual - 1);
+  else if (e.target.closest('.foto-prox')) mostrarFoto(fotoAtual + 1);
+});
+
 document.addEventListener('keydown', (e) => {
+  if (ampliada.classList.contains('aberto')) {
+    if (e.key === 'Escape') fecharFoto();
+    if (e.key === 'ArrowRight') mostrarFoto(fotoAtual + 1);
+    if (e.key === 'ArrowLeft') mostrarFoto(fotoAtual - 1);
+    if (e.key === 'Tab') {
+      const focaveis = [...ampliada.querySelectorAll('button:not([hidden])')];
+      const i = focaveis.indexOf(document.activeElement);
+      e.preventDefault();
+      focaveis[(i + (e.shiftKey ? -1 : 1) + focaveis.length) % focaveis.length].focus();
+    }
+    return;
+  }
   if (e.key === 'Escape') {
     if (fundo.classList.contains('aberto')) fecharCaptura();
     else if (links.classList.contains('aberto')) { fecharMenu(); hamburguer.focus(); }
